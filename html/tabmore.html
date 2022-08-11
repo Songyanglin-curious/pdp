@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> tabmore </title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <script type="text/javascript" src="../conn/jsfile/jquery.min.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/vue.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/iview.min.js?v=1.21.615.1 "></script>
+    <script type="text/javascript" src="../conn/jsfile/element.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/md5.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/JqPro.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/guddlg.js"></script>
+    <script type="text/javascript" src="../conn/jsfile/pdp.core.js?v=1.21.530.1"></script>
+    <script type="text/javascript" src="../conn/jsfile/PDPAjax.js"></script>
+    <script type="text/javascript" src="../conn/pdpjs/pdpproject.js?v=1.20.1109.1"></script>
+    <script type="text/javascript" src="../conn/jsfile/common.js"></script>
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/element.css" />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/iview.css?v=1.21.615.1 " />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/iviewReset.css" />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/common.css" />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/project.css" />
+    <script type="text/javascript" src="../conn/pdpjs/ctrl/tabmore.js"></script>
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/ctrl/tabmore.css" />
+    <style type="text/css">
+        [v-cloak] {  display: none; }
+    </style>
+	</head>
+	<body>
+    <div id="pdp" v-cloak v-loading="'loadingPDP'" style="width:100%;height:100%"><div class="wh100"><div><tabmore :datasource="testData"></tabmore></div><div><input type="button" value="增加测试" @click="button5_onclick" /><input type="button" value="减少测试" @click="button6_onclick" /></div></div>
+    </div>
+        
+<script type="text/javascript">
+
+var tabmore= new Vue({ el: '#pdp'
+	, data: { loadingPDP:false,'jump':Ysh.Request.get('m'),'testData':'','count':0 } 
+	, methods: { button5_onclick:function() {this.testAdd()},button6_onclick:function() {this.testReduce()} }
+	,created:function () {  this.testData = [
+
+          ]
+          this.testAdd = function(){
+   
+            let value = "测试" +  this.count
+            let label = "测试测试测试测试测试" +this.count
+            this.count++
+            this.testData.push([value,label])
+          },
+          this.testReduce = function(){
+            this.testData.pop();
+          } }
+	,mounted:function () {  Ysh.Vue.attachResize(this); } }); var pdp=tabmore;
+</script>
+    </body>
+</html>

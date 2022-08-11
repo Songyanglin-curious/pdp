@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root maxid="1" desc="tabmore">
+  <inits>
+    <init id="jump" type="request" arg="m"></init>
+  </inits>
+  <consts>
+    <const id="testData"></const>
+    <const id="count" type="number" arg="0"></const>
+  </consts>
+  <ctrls>
+    <div id="div0" desc="根容器">
+      <a class='wh100'></a>
+      <div>
+        <tabmore>
+            <sa datasource="testData"></sa>
+        </tabmore>
+      </div>
+      <div>
+        <button>
+            <a type="button" value="增加测试"></a>
+            <e>
+                <onclick>
+                    <list type="script" value="this.testAdd()"></list>
+                </onclick>
+            </e>
+        </button>
+        <button>
+            <a type="button" value="减少测试"></a>
+            <e>
+                <onclick>
+                    <list type="script" value="this.testReduce()"></list>
+                </onclick>
+            </e>
+        </button>
+
+      </div>
+    </div>
+  </ctrls>
+  <scripts>
+    <script event="created">
+      <list type="script">
+        <value>
+          <![CDATA[
+          this.testData = [
+
+          ]
+          this.testAdd = function(){
+   
+            let value = "测试" +  this.count
+            let label = "测试测试测试测试测试" +this.count
+            this.count++
+            this.testData.push([value,label])
+          },
+          this.testReduce = function(){
+            this.testData.pop();
+          }
+          ]]>
+        </value>
+      </list>
+    </script>
+    <script event="mounted">
+      <list type="script">
+        <value>
+          <![CDATA[
+          ]]>
+        </value>
+      </list>
+    </script>
+  </scripts>
+</root>

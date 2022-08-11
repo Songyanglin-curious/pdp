@@ -1,0 +1,24 @@
+.tabmore-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.table-item-wrap{
+    padding:0.1px;
+}
+.tabmore-item{
+    padding: 3px 5px;
+    border: solid 1px #fff;
+    background: #2e723d;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.activeClass{
+    padding: 3px 5px;
+    border: solid 1px rgb(105, 11, 11);
+    background: #2449ae;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}

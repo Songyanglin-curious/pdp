@@ -120,6 +120,12 @@
         /conn/cssfile/ctrl/titlediv.css
       </reference>
     </title-div>
+    <tabmore>
+      <reference>
+        /conn/pdpjs/ctrl/tabmore.js
+        /conn/cssfile/ctrl/tabmore.css
+      </reference>
+    </tabmore>
     <ysh-graph>
       <reference>
         /conn/pdpjs/ctrl/yshgraph.js
