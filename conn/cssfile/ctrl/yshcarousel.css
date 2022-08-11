@@ -1,0 +1,36 @@
+.carousel-wrapper{
+	perspective: 1000px;
+	padding: 100px 200px;
+	height: 200px;
+	--translate-x-base-num:100px;
+}
+.carousel-item{
+	width: 400px;
+	height: 180px;			
+	position: absolute;
+	transition: all 1.8s;
+	left: 50%;
+	margin-left: -200px;
+	background: #ddd;
+}
+
+[data-item-pos="pos1"]{
+	height: 200px;
+	transform: translate(calc(var(--translate-x-base-num) * (0)), 0px) rotate3d(0, 1, 0, 0deg) !important;		
+}
+
+.div0{
+	background: yellowgreen;
+}
+.div1{
+	background: goldenrod;
+}
+.div2{
+	background: blueviolet;
+}
+.div3{
+	background: greenyellow;
+}
+.div4{
+	background: paleturquoise;
+}

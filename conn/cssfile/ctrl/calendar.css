@@ -1,0 +1,54 @@
+.cal-wrapper{
+    width: 300px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cal-wrapper .header{
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+    align-items: center;
+}
+
+.cal-wrapper .header > i{
+    font-size: 25px;
+}
+
+.cal-wrapper .header > i:first-child,
+.cal-wrapper .header > i:last-child{
+    font-size: 20px;
+}
+
+.cal-wrapper .week{
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.cal-wrapper .days{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cal-wrapper .week> span{
+    flex: 1;
+    text-align: center;
+}
+
+.cal-wrapper .days .days-week{
+    display: flex;
+}
+
+.cal-wrapper .days .days-week>span{
+    flex: 1;
+    text-align: center;
+}
+
+.cal-wrapper .infoday{
+    background: #dde9f4;
+}

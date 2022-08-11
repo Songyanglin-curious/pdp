@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+  <GetTableEditColumn>
+    <![CDATA[
+      select title, fieldname, isidentity, coltype, datasource, width, minwidth, isfilter from dbTableEditColumn where tablename={0}
+    ]]>
+  </GetTableEditColumn>
+  <GetFlowListColumns>
+    <![CDATA[
+      select title, key, width, align from tbFlowListInfo where flowid={0} order by idx
+    ]]>
+  </GetFlowListColumns>
+  <GetFlowSearchInfo>
+    <![CDATA[
+      select title, type, datasource, field from tbFlowSearchInfo where flowid={0} order by idx
+    ]]>
+  </GetFlowSearchInfo>
+</ROOT>

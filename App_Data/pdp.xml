@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+  <Module>
+    <GetByUser>
+      <![CDATA[SELECT moduleid FROM tbUserModule WHERE usernum={0} ORDER BY moduleidx]]>
+    </GetByUser>
+    <DelUserModule>
+      <![CDATA[DELETE FROM tbUserModule WHERE usernum={0} AND moduleid={1}]]>
+    </DelUserModule>
+    <AddUserModule>
+      <![CDATA[INSERT INTO tbUserModule (moduleid,usernum,moduleidx)
+      SELECT {1},{0},NVL(MAX(moduleidx),0)+1 FROM tbUserModule WHERE usernum={0}
+      ]]>
+    </AddUserModule>
+    <SetModuleTop>
+      <![CDATA[UPDATE tbUserModule SET moduleidx=moduleidx+1 WHERE usernum={0} AND moduleid<>{1};
+      UPDATE tbUserModule SET moduleidx=1 WHERE usernum={0} AND moduleid={1};]]>
+    </SetModuleTop>
+    <GetModuleById>
+      <![CDATA[SELECT MODULENAME,MODULETYPE,MODULEPRIV,MODULEARG,PMODULEID,MODULEIDX,IMG FROM TBMODULEINFO WHERE MODULEID={0}]]>
+    </GetModuleById>
+    <AddModule>
+      <![CDATA[INSERT INTO TBMODULEINFO (MODULENAME,MODULETYPE,MODULEPRIV,MODULEARG,PMODULEID,MODULEIDX,IMG) 
+      SELECT {0},{1},{2},{3},{4},MAX(MODULEIDX)+1,{5} FROM TBMODULEINFO WHERE PMODULEID={4}]]>
+    </AddModule>
+    <UpdateModule>
+      <![CDATA[UPDATE TBMODULEINFO SET MODULENAME={1},MODULEARG={2},IMG={3} WHERE MODULEID={0}]]>
+    </UpdateModule>
+    <DelModule>
+      <![CDATA[DELETE FROM TBMODULEINFO WHERE MODULEID={0}]]>
+    </DelModule>
+    <MoveEnd>
+      <![CDATA[
+      UPDATE TBMODULEINFO SET MODULEIDX=(SELECT NVL(MAX(MODULEIDX),0)+1 FROM TBMODULEINFO WHERE PMODULEID={1} AND MODULEID<>{0}) WHERE MODULEID={0}
+      ]]>
+    </MoveEnd>
+    <MoveModule>
+      <![CDATA[
+      UPDATE TBMODULEINFO SET MODULEIDX=MODULEIDX+1 WHERE PMODULEID={2} AND MODULEIDX>=(SELECT MODULEIDX FROM TBMODULEINFO WHERE MODULEID={1} AND MODULEID<>{0});
+      UPDATE TBMODULEINFO SET MODULEIDX=(SELECT MODULEIDX-1 FROM TBMODULEINFO WHERE MODULEID={1}) WHERE MODULEID={0};
+      ]]>
+    </MoveModule>
+  </Module>
+  <User>
+    <AddLoginInfo>
+      <![CDATA[
+        delete from tbLoginInfo where ipAddr={0} or userid='{1}';
+        insert into tbLoginInfo(ipAddr,userid,usepwd,ifSavePWD,ifAutoLogin) values({0},{1},{2},{3},{4});
+    ]]>
+    </AddLoginInfo>
+    <GetLoginInfoByUserId>
+      <![CDATA[
+      select usepwd,ifSavePWD,ifAutoLogin from tbLoginInfo where userid={0} and ipaddr={1};
+    ]]>
+    </GetLoginInfoByUserId>
+    <GetLoginInfoFirst>
+      <![CDATA[
+      select userid,usepwd,ifSavePWD,ifAutoLogin from tbLoginInfo where ipAddr={0}
+    ]]>
+    </GetLoginInfoFirst>    
+  </User>
+</ROOT>

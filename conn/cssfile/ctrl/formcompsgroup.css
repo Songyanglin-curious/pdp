@@ -1,0 +1,8 @@
+.form-comps-group-wrapper{
+    display: flex;
+}
+
+.form-comp-box{
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+  <!--登录时保存登录信息-->
+  <AddLoginInfo>
+    <![CDATA[
+        delete from tbLoginInfo where ipAddr={0} or userid='{1}';
+        insert into tbLoginInfo(ipAddr,userid,usepwd,ifSavePWD,ifAutoLogin) values({0},{1},{2},{3},{4});
+    ]]>
+  </AddLoginInfo>
+  <GetLoginInfoByUserId>
+    <![CDATA[
+      select usepwd,ifSavePWD,ifAutoLogin from tbLoginInfo where userid={0} and ipaddr={1};
+    ]]>
+  </GetLoginInfoByUserId>
+  <GetLoginInfoFirst>
+    <![CDATA[
+      select userid,usepwd,ifSavePWD,ifAutoLogin from tbLoginInfo where ipAddr={0}
+    ]]>
+  </GetLoginInfoFirst>
+<!--查询一个间隔的所有间隔信号-->
+</ROOT>

@@ -1,0 +1,110 @@
+﻿.collapse-table-box-wrapper{
+
+}
+
+.collapse-table-box-header{
+	display: flex;
+	justify-content: space-between;
+}
+
+.collapse-table-box-header1{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.collapse-table-box-title{
+	border: 1px solid #2a5fa1;
+	padding: 5px 8px;
+	display: flex;
+	align-items: center;
+	padding-right: 13px;
+}
+
+.collapse-table-box-title>i:first-child{
+	margin-right: 10px;
+	font-size: 22px;
+}
+
+.collapse-table-box-title>i:first-child:hover{
+	cursor: pointer;
+}
+
+.collapse-table-box-content{
+	
+}
+
+.collapse-table-box-content .ivu-table-wrapper{
+	overflow: visible;
+}
+
+/* .collapse-table-box-wrapper .ivu-table-cell{
+	padding: 0;
+} */
+
+.collapse-table-box-wrapper .two-ctrl-wrapper{
+	margin: 0 -18px;
+}
+
+.collapse-table-box-wrapper .two-ctrl-item{
+	height: var(--ivu-table-row-height);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 18px;
+}
+
+.collapse-table-box-wrapper .two-ctrl-item:first-child{
+	border-bottom: 1px solid var(--ivu-table-border-color);;
+}
+
+.collapse-table-box-modal .modalsobig{
+	display: none;
+}
+
+.collapse-table-box-title .ivu-input-wrapper{
+	width: 120px;
+}
+
+.collapse-table-box-wrapper .ivu-table-cell{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.collapse-table-box-wrapper .tbl-cell-href{	
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.collapse-table-box-wrapper .tbl-cell-href:hover{
+	color: #2d8cf0;
+}
+
+.move-btns{
+	display: flex;
+	align-items: center;
+	font-size: 0;
+	justify-content: center;
+	gap: 5px;
+}
+
+.move-up-btn{
+	cursor: pointer;
+	width: 36px;
+	height: 36px;
+	background: url('/i/PDPImg/row-move-up.png') no-repeat 0 0 / 100% 100%;
+}
+
+.move-down-btn{
+	cursor: pointer;
+	width: 36px;
+	height: 36px;
+	background: url('/i/PDPImg/row-move-down.png') no-repeat 0 0 / 100% 100%;
+}
+
+.move-up-btn:hover{
+	background: url('/i/PDPImg/row-move-up-hover.png') no-repeat 0 0 / 100% 100%;
+}
+
+.move-down-btn:hover{
+	background: url('/i/PDPImg/row-move-down-hover.png') no-repeat 0 0 / 100% 100%;
+}

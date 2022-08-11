@@ -1,0 +1,1593 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> 设计管理 </title>
+    <script type="text/javascript" src="/conn/jsfile/vue.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/iview.min.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/jquery.min.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/md5.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/JqPro.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/guddlg.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/pdp.core.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/PDPAjax.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpobject.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/v-movable.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_propcomp.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/FillTemplate.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/conn/jsfile/mike/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpproject.js"></script>
+    <script type="text/javascript" charset="gb2312" src="/conn/jsfile/jquery/jquery-ui.custom.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/DateTimeCtrl.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/conn/cssfile/main.css" />
+    <link type="text/css" rel="stylesheet" href="/conn/cssfile/iview.css" />
+    <link type="text/css" rel="stylesheet" href="/conn/cssfile/custom-theme/jquery-ui.custom.css">
+    <link type="text/css" rel="stylesheet" href="/conn/pdpjs/pdp2.0.css" />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/newcontrols.css" />
+    <link type="text/css" rel="stylesheet" href="../conn/cssfile/mikestyle.css" />
+
+    <!--
+    <script type="text/javascript" src="/conn/jsfile/echarts.min.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/esimplechart.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/scrolltable.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/yshtab.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/sp/gc.spread.sheets.all.11.1.0.min.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/sp/gc.spread.sheets.resources.zh.11.1.0.min.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/spread.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/datetimectrl.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/richbutton.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/sliderbuttons.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/tree.js"></script>
+    <script type="text/javascript" src="/conn/jsfile/flowclientcomm.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/ctrl/flowitemoperator.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/conn/cssfile/yshtab.css" />
+    <link type="text/css" rel="stylesheet" href="/conn/cssfile/sp/gc.spread.sheets.excel2013white.11.1.0.css" />
+    -->
+
+    <style type="text/css">
+            [v-cloak] {{  display: none; }}
+    </style>
+    <style type="text/css">
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        #btnGroup {
+            height: 32px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+            #btnGroup > i {
+                /*position: relative;
+                top: 6px;*/
+                margin: 0 5px;
+                cursor: pointer;
+            }
+
+        .ctrlbtn {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .ctrlBox {
+            background: #fef4eb;
+            padding: 5px;
+            margin: 50px;
+            border: 1px solid #f60;
+            z-index: 1000;
+        }
+
+            .ctrlBox .title {
+                height: 25px;
+                background: #f60;
+            }
+
+            .ctrlBox .titleSecond {
+                font-size: 15px;
+            }
+
+            .ctrlBox span {
+                display: inline-block;
+                margin: 3px 5px;
+            }
+
+            .ctrlBox > div {
+                padding: 0 15px;
+            }
+
+                .ctrlBox > div h3 {
+                    margin-left: -10px;
+                }
+
+        .prop table {
+            font-size: 15px;
+            color: #282828;
+            text-align: center;
+            border-collapse: collapse;
+            margin-top: -10px;
+        }
+
+            .prop table tr:first-child {
+                background: #e6f1f0;
+            }
+
+                .prop table tr:first-child td {
+                    font-weight: bold;
+                }
+
+            .prop table td {
+                height: 30px;
+                border: 1px solid #cfe8e8;
+                padding: 0 7px;
+            }
+
+            .prop table tr td:last-child {
+                /*border-style:none;*/
+            }
+
+        .vertical-center-modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .vertical-center-modal .ivu-modal {
+                top: 0;
+            }
+
+        #divMenu {
+            border-bottom: 1px solid;
+        }
+
+            #divMenu:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+
+        #divCtrl {
+            position: absolute;
+            top: 60px;
+            bottom: 100px;
+        }
+
+        #divMain {
+            position: absolute;
+            left: 422px;
+            float: left;
+            right: 0;
+            top: 60px;
+            bottom: 160px;
+        }
+
+        #divSelected {
+            position: absolute;
+            left: 422px;
+            float: left;
+            right: 0;
+            bottom: 100px;
+            height: 60px;
+            border: 1px solid #cccccc;
+        }
+
+        #divProp {
+            /*width: 100%;*/
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+            position: absolute;
+            bottom: 0;
+            left: 222px;
+            right: 0;
+        }
+
+        .imgWrapper {
+            background: #fff;
+            position: fixed;
+        }
+
+        #toolbar img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .dataSourceText {
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+    <script type="text/javascript">
+        function Size() {
+            if (tdTree.style.display == "") {
+                tdTree.style.display = "none";
+                event.srcElement.src = "/i/exp.bmp";
+                event.srcElement.title = "点击显示左栏";
+                if ($("#divMain").position().left > 0) {
+                    $("#divMain").css("left", $("#divMain").position().left - 200);
+                    $("#divSelected").css("left", $("#divSelected").position().left - 200);
+                    $("#divProp").css("left", $("#divProp").position().left - 200);
+                }
+            }
+            else {
+                tdTree.style.display = "";
+                event.srcElement.src = "/i/fold.bmp";
+                event.srcElement.title = "点击隐藏左栏";
+                if ($("#divMain").position().left > 0) {
+                    $("#divMain").css("left", $("#divMain").position().left + 200);
+                    $("#divSelected").css("left", $("#divSelected").position().left + 200);
+                    $("#divProp").css("left", $("#divProp").position().left + 200);
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<template id="propertyfield_template">
+    <select v-if="type==0||type==3" v-modal="value">
+        <option value="true">是</option>
+        <option value="false">否</option>
+    </select>
+    <InputNumber v-else-if="type == 2" size="small" v-model="value"></InputNumber>
+    <input v-else type="text" v-model="value" @blur="setValue" :disabled="!canSetValue" />
+</template>
+<script type="text/x-template" id="dropfield_template">
+    <span @dragover="dragover(id,tag,field,$event)" @drop="drop(id,tag,field,$event)">
+        <template v-if="multiple">
+        </template>
+        <template v-else>
+            <slot>
+                {{ fromName ||"拖动数据源到此" }}
+                <Icon v-if="!isNoField" type="ios-compass" color="blue" @click="locatefrom(data[field])"></Icon>
+                <Icon v-if="!isNoField" type="ios-close-circle" color="red" @click="clearField"></Icon>
+                <slot name="other"></slot>
+            </slot>
+        </template>
+    </span>
+</script>
+<script type="text/x-template" id="page_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="页面信息" name="base" style="text-align:left;padding-left:10px">
+                页面名称：<input type="text" style="width:120px" v-model="data.desc" />
+                &nbsp;&nbsp;&nbsp;引用文件：<textarea style="width:300px" v-model="data.includes"></textarea>
+            </TabPane>
+            <TabPane label="事件" name="scripts">
+                <table>
+                    <tr>
+                        <td v-for="k in data.scripts">{{ getDesc(k.event,'e') }}</td>
+                        <td rowspan="2" style="vertical-align:middle"><Icon type="ios-add" @click.stop="add('e')"></Icon></td>
+                    </tr>
+                    <tr>
+                        <td v-for="k in data.scripts" @click="editEvent(k)">
+                            <a href="#"> {{ getEventString(k) }} </a>
+                        </td>
+                    </tr>
+                </table>
+            </TabPane>
+            <TabPane label="样式表" name="styles">
+                <textarea style="width:300px"></textarea>
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="init_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="参数信息" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />&nbsp;&nbsp;
+                类型：<select style="width:150px" v-model="data.type"><option value="request">地址参数</option><option value="session">服务器缓存</option><option value="config">系统配置</option></select>&nbsp;&nbsp;
+                值：<input type="text" style="width:150px" v-model="data.arg" />
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="priv_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="权限信息" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />&nbsp;&nbsp;
+                值：<input type="text" style="width:150px" v-model="data.arg" />
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="const_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="变量信息" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />&nbsp;&nbsp;
+                类型：<select style="width:150px" v-model="data.type"><option value="string">字符串</option><option value="number">数字</option><option value="time">时间</option><option value="bool">判断</option><option value="string[]">字符串数组</option><option value="number[]">数字数组</option><option value="2d">2维字符串数组</option><option value="object">JS对象</option></select>&nbsp;&nbsp;
+                值：<select v-if="data.type=='bool'" v-model="data.arg"><option value="true">是</option><option value="false">否</option></select>
+                <input v-else type="text" style="width:150px" v-model="data.arg" />
+                <span v-if="data.type=='2d'">
+                    长度：<InputNumber size="small" :min="1" v-model="data.length"></InputNumber>
+                </span>
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="col_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="表列信息" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />&nbsp;&nbsp;
+                列名：<input type="text" style="width:150px" v-model="data.name" />&nbsp;&nbsp;
+                数据来源：<dropfield :id="data.id" :data="data" field="from" tag="col"></dropfield>
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="input_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="输入参数" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />&nbsp;&nbsp;
+                数据来源：<dropfield :id="data.id" :data="data" field="from" tag="input"></dropfield>
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="output_template">
+    <div class="prop">
+        <Tabs type="card">
+            <TabPane label="输出结果" name="base" style="text-align:left;padding-left:10px">
+                id:{{ data.id }}&nbsp;&nbsp;
+                描述：<input type="text" style="width:150px" v-model="data.desc" />
+            </TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="ctrl_prop_tab_template">
+    <TabPane :label="desc" :name="cfg">
+        <table>
+            <tr>
+                <td v-for="k in keys(ctrl.e)">{{ getDesc(k,"e") }}</td>
+                <td rowspan="2" style="vertical-align:middle"><Icon type="ios-add" @click.stop="add('e')"></Icon></td>
+            </tr>
+            <tr>
+                <td v-for="k in keys(ctrl.e)" @click="editEvent(ctrl.e[k],k)">
+                    <a href="#">{{ getEventString(ctrl.e[k]) }}</a>
+                </td>
+            </tr>
+        </table>
+    </TabPane>
+</script>
+<script type="text/x-template" id="ctrl_prop_template">
+    <div class="prop">
+        <Tabs type="card">
+            <div slot="extra" style="padding-top:5px">
+                <Tooltip v-if="args.canEnlarge" content="放大">
+                    <Icon type="ios-search" size="22" color="blue" @click="enlarge(ctrl.id)"></Icon>
+                </Tooltip>
+                <Tooltip content="定位">
+                    <Icon type="ios-compass" size="22" color="blue" @click="locate(ctrl.id)" style="margin-left:5px;margin-right:5px;"></Icon>
+                </Tooltip>
+                <Tooltip content="删除" placement="bottom-end">
+                    <Icon v-if="canDelete" type="ios-close-circle" size="22" color="red" @click="del()"></Icon>
+                </Tooltip>
+            </div>
+            <slot></slot>
+            <TabPane label="事件" name="e">
+                <table>
+                    <tr>
+                        <td v-for="k in keys(ctrl.e)">{{ getDesc(k,"e") }}</td>
+                        <td rowspan="2" style="vertical-align:middle"><Icon type="ios-add" @click.stop="add('e')"></Icon></td>
+                    </tr>
+                    <tr>
+                        <td v-for="k in keys(ctrl.e)" @click="editEvent(ctrl.e[k],k)">
+                            <a href="#">{{ getEventString(ctrl.e[k]) }}</a>
+                        </td>
+                    </tr>
+                </table>
+            </TabPane>
+            <TabPane label="权限" name="p">权限</TabPane>
+        </Tabs>
+    </div>
+</script>
+<script type="text/x-template" id="base_ctrl_template">
+    <ctrl_prop :ctrl="data" :args="args">
+        <TabPane :label="(data.desc||' ') + '信息('+data.tag+')'" name="base">
+            <table>
+                <tr><td>id</td><td>描述</td><td v-if="args.needData">数据绑定</td><td style="display:none">循环数据</td><td v-if="args.needSource">数据来源</td><td>显示条件</td><td>提示内容</td></tr>
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td><input type="text" style="width:100px" v-model="data.desc" /></td>
+                    <td v-if="args.needData">
+                        <dropfield :id="data.id" :data="data" field="from" :tag="data.tag"></dropfield>
+                    </td>
+                    <td style="display:none">
+                        <dropfield :id="data.id" :data="data" field="loop" :tag="data.tag"></dropfield>
+                    </td>
+                    <td v-if="args.needSource">
+                        <dropfield :id="data.id" :data="data" field="source" :tag="data.tag"></dropfield>
+                    </td>
+                    <td><input type="text" style="width:100px" v-model="data.show" placeholder="显示条件表达式" /></td>
+                    <td><input type="text" style="width:100px" v-model="data.tooltip" placeholder="提示文本" /></td>
+                </tr>
+            </table>
+        </TabPane>
+        <TabPane label="属性" name="asa">
+            <table>
+                <tr>
+                    <td v-for="k in allKeys">{{ getDesc(k,"a") }}</td>
+                    <td rowspan="2" style="vertical-align:middle"><Icon type="ios-add" @click.stop="add(['a','sa'])"></Icon></td>
+                </tr>
+                <tr>
+                    <td v-for="k in allKeys">
+                        <dropfield :id="data.id" :data="data.sa" :field="k" :tag="data.tag">
+                            <propertyfield v-if="!getUnit(data,'sa',k)" style="width:100px" :obj="data" :fieldarr="[k]" :tag="data.tag" fieldname="a"></propertyfield>
+                        </dropfield>
+                    </td>
+                </tr>
+            </table>
+        </TabPane>
+        <TabPane label="属性处理" name="fasa">
+            <table>
+                <tr>
+                    <td v-if="data.from">绑定值</td>
+                    <td v-for="k in saKeys">{{ getDesc(k,"a") }}</td>
+                    <td rowspan="2">
+                        对绑定值进行处理，{0}代表绑定值，例如：序号列绑定index，用1+{0}，或者Ysh.Time.toString({0},'d')
+                    </td>
+                </tr>
+                <tr>
+                    <td v-if="data.from">
+                        <propertyfield style="width:100px" :obj="data" :fieldarr="['from']" fieldname="sf"></propertyfield>
+                    </td>
+                    <td v-for="k in saKeys">
+                        <propertyfield style="width:100px" :obj="data" :fieldarr="[k]" fieldname="sf"></propertyfield>
+                    </td>
+                </tr>
+            </table>
+        </TabPane>
+    </ctrl_prop>
+</script>
+<script type="text/x-template" id="echart_prop_template">
+    <ctrl_prop :ctrl="data" :args="args">
+        <TabPane :label="(data.desc||' ') + '信息('+data.tag+')'" name="base">
+            <table>
+                <tr>
+                    <td>id</td>
+                    <td>描述</td>
+                    <td>数据绑定</td>
+                    <td>横坐标</td>
+                    <td>纵坐标</td>
+                    <td>宽度</td>
+                    <td>高度</td>
+                    <td rowspan="2" style="vertical-align:middle">
+                        <Icon type="ios-cog" @click.stop="setOption"></Icon>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td><input type="text" style="width:100px" v-model="data.desc" /></td>
+                    <td>
+                        <dropfield :id="data.id" :data="data" field="from" :tag="data.tag"></dropfield>
+                    </td>
+                    <td>
+                        <dropfield :id="data.id" :data="data.sa" :field="'xaxis'" :tag="data.tag"></dropfield>
+                    </td>
+                    <td>
+                        <span @dragover="dragover(data.id,data.tag,'c',$event)" @drop="drop(data.id,data.tag,'c',$event)">
+                            <template v-if="noChildren">
+                                {{ "拖动系列数据源到此" }}
+                            </template>
+                            <template v-else>
+                                <template v-for="ctrl in data.c">
+                                    {{ ctrl.desc }}
+                                    <Icon type="ios-compass" color="blue" @click="locate(ctrl.id)"></Icon>
+                                    <Icon type="ios-close-circle" color="red" @click="delSub(ctrl.id)"></Icon>
+                                </template>
+                            </template>
+                        </span>
+                    </td>
+                    <td>
+                        <dropfield :id="data.id" :data="data.sa" :field="'s_width'" :tag="data.tag">
+                            <propertyfield v-if="!getUnit(data,'sa','s_width')" style="width:100px" :obj="data" :fieldarr="['s_width']" fieldname="a"></propertyfield>
+                        </dropfield>
+                    </td>
+                    <td>
+                        <dropfield :id="data.id" :data="data.sa" :field="'s_height'" :tag="data.tag">
+                            <propertyfield v-if="!getUnit(data,'sa','s_height')" style="width:100px" :obj="data" :fieldarr="['s_height']" fieldname="a"></propertyfield>
+                        </dropfield>
+                    </td>
+                </tr>
+            </table>
+        </TabPane>
+    </ctrl_prop>
+</script>
+<script type="text/x-template" id="yshtab_template">
+    <div :class="tabStyle">
+        <div class="TabTitle">
+            <div v-for="(tab, index) in currentTabs" :value="tab[0]" :title="tab[1]" :class="[itemStyle, tab[0] == value ? activeStyle : normalStyle ]" @click="selectTab(tab[0])">{{tab[1]}}</div>
+        </div>
+        <div class="pageMove" v-if="scrollable">
+            <div :class="['prev', { disabled: this.currentPageIndex <= 0 }]" @click="pagePrev"><</div>
+            <div :class="['next', { disabled: this.currentPageIndex >= this.pages.length - 1 }]" @click="pageNext">></div>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="scrolltable_template">
+    <div style="overflow-y:hidden" :style="{ height: tableHeight }">
+        <div style="height:100%;overflow-y:hidden;float:left;" :style="{ width: tableWidth }" @mousewheel="scrollTable">
+            <i-table :columns="columns" :data="currData" :stripe="stripe" :border="border" :show-header="showHeader" :width="width" :height="height" :loading="loading" :disabled-hover="disabledHover" :highlight-row="highlightRow"
+                     :row-class-name="rowClassName" :size="size" :no-data-text="noDataText" :no-filtered-data-text="noFilteredDataText" @on-current-change="onCurrentChange" @on-select="onSelect" @on-select-cancel="onSelectCancel"
+                     @on-select-all="onSelectAll" @on-selection-change="onSelectionChange" @on-sort-change="onSortChange" @on-filter-change="onFilterChange" @on-row-click="onRowClick" @on-row-dblclick="onRowDblclick" @on-expand="onExpand"></i-table>
+        </div>
+        <div class="divScroll" style="float:left;overflow-y:auto;" :style="{ height: tableHeight }" @scroll="scroll" :scrollTop="scrollTop">
+            <div style="width:1px;" :style="{ height: dataHeight }"></div>
+        </div>
+    </div>
+</script>
+<body style="width:100%;height:100%;margin:0px;padding:0px;">
+    <div style="width:100%;height:100%">
+        <table style="height: 100%; width: 100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td id="tdTree" style="width: 216px" valign="top">
+                    <div id="divLeft" style="width:100%;height:100%;position: relative;">
+                        <div id="btnGroup">
+                            <Icon type="ios-add-circle" size="20" @click="addFile"></Icon>
+                            <Icon type="ios-remove-circle" size="20" @click="delSelected"></Icon>
+                            <Icon type="ios-create" size="20" @click="editSelected"></Icon>
+                            <i-input v-model="value" placeholder="输入过滤条件" clearable style="width: 100px;height:26px;"></i-input>
+                        </div>
+                        <Tree :data="showFiles" @on-select-change="selectTree" :render="renderContent" style="width:100%;position:absolute;top: 32px;bottom: 0; overflow:auto"></Tree>
+                        <Modal :mask-closable="false" v-model="showAddFileDlg" title="添加" class-name="vertical-center-modal" @on-ok="sureAddFile">
+                            <i-form :label-width="100">
+                                <form-item label="文件名称：">
+                                    <i-input v-model="filename" placeholder="Enter something..."></i-input>
+                                </form-item>
+                                <form-item label="文件描述：">
+                                    <i-input v-model="filedesc" placeholder="Enter something..."></i-input>
+                                </form-item>
+                                <form-item label="文件类型：">
+                                    <i-select v-model="filetype">
+                                        <i-option value="20">PDP2.0设计页面</i-option>
+                                    </i-select>
+                                </form-item>
+                                <form-item label="模板文件：">
+                                    <cascader :data="templatedata" v-model="templatefile" placeholder="默认模板"></cascader>
+                                </form-item>
+                            </i-form>
+                        </Modal>
+                        <Modal :mask-closable="false" v-model="showEditDlg" title="修改" class-name="vertical-center-modal" @on-ok="sureEdit">
+                            <i-input v-model="editContent"></i-input>
+                        </Modal>
+                    </div>
+                </td>
+                <td style="width: 6px; background-color: #C4C2C3; height: 100%" valign="middle">
+                    <img onclick="return Size()" style="cursor: pointer" title="点击隐藏左栏" alt="" src="/i/fold.bmp" />
+                </td>
+                <td style="margin: 0px; height: 100%; background-color: #FFF;" valign="top">
+                    <div id="divContent" style="display:;">
+                        <div id="divMenu" v-cloak style="width:100%;" :style="{ height:layout.menuHeight + 'px' }">
+                            <i-button size="small" onclick="Set()">页面设置 {{ filename }} </i-button>
+                            <i-button size="small" onclick="Save()">保存</i-button>
+                            <i-button size="small" onclick="Public()">发布</i-button>
+                            <i-button size="small" onclick="PublicAll()">发布所有</i-button>
+                            <i-button size="small" onclick="vmMenu.bShowCtrl = !vmMenu.bShowCtrl;">控件</i-button>
+                            <i-button size="small" onclick="Refresh()">刷新</i-button>
+                            <i-button size="small" :disabled="isMain" @click="gotoMain">主页</i-button>
+
+                            <i-button size="small" onclick="Copy()">复制</i-button>
+
+                            <textarea id="ta1" style="display:none;width:200px;height:45px;float:right"></textarea>
+                            <div id="toolbar" style="padding-top:5px;padding-left:5px;vertical-align:middle">
+                                <Tooltip content="左对齐">
+                                    <img src="/i/design/left.png" alt="" @click="left" />
+                                </Tooltip>
+                                <Tooltip content="水平居中">
+                                    <img src="/i/design/center.png" alt="" @click="center" />
+                                </Tooltip>
+                                <Tooltip content="右对齐">
+                                    <img src="/i/design/right.png" alt="" @click="right" />
+                                </Tooltip>
+
+                                <span style="margin-left:15px"></span>
+
+                                <Tooltip content="上对齐">
+                                    <img src="/i/design/top.png" alt="" @click="top" />
+                                </Tooltip>
+                                <Tooltip content="垂直居中">
+                                    <img src="/i/design/middle.png" alt="" @click="middle" />
+                                </Tooltip>
+                                <Tooltip content="下对齐">
+                                    <img src="/i/design/bottom.png" alt="" @click="bottom" />
+                                </Tooltip>
+
+                                <span style="margin-left:15px"></span>
+
+                                <Tooltip content="左移">
+                                    <Icon type="ios-arrow-dropleft-circle" size="22" @click="toLeft"></Icon>
+                                </Tooltip>
+                                <Tooltip content="右移">
+                                    <Icon type="ios-arrow-dropright-circle" size="22" @click="toRight"></Icon>
+                                </Tooltip>
+                                <Tooltip content="上移">
+                                    <Icon type="ios-arrow-dropup-circle" size="22" @click="toTop"></Icon>
+                                </Tooltip>
+                                <Tooltip content="下移">
+                                    <Icon type="ios-arrow-dropdown-circle" size="22" @click="toBottom"></Icon>
+                                </Tooltip>
+
+                                <span style="margin-left:15px"></span>
+                                <Tooltip content="背景颜色">
+                                    <Icon id="testBGIcon" size="22" type="ios-color-palette"></Icon>
+                                </Tooltip>
+                                <Tooltip content="字体颜色">
+                                    <Icon id="testIcon" size="22" type="logo-wordpress"></Icon>
+                                </Tooltip>
+                                <Tooltip content="字号加大">
+                                    <Icon type="ios-add-circle" size="22" @click="setFontSize(1)"></Icon>
+                                </Tooltip>
+                                <Tooltip content="字号减小">
+                                    <Icon type="ios-remove-circle" size="22" @click="setFontSize(-1)"></Icon>
+                                </Tooltip>
+                                <Tooltip content="文字加粗">
+                                    <img src="/i/design/B.png" alt="" @click="set1in2('s_font-weight',400,700);" />
+                                </Tooltip>
+                                <Tooltip content="文字斜体">
+                                    <img src="/i/design/I.png" alt="" @click="set1in2('s_font-style','normal','italic')" />
+                                </Tooltip>
+                                <Tooltip content="下划线">
+                                    <img src="/i/design/U.png" alt="" @click="set1in2('s_text-decoration','none','underline')" />
+                                </Tooltip>
+
+                                <span style="margin-left:15px"></span>
+                                <div style="display:inline-block;height:25px;vertical-align:middle">
+                                    w:<propertyfield style="width:60px" :obj="data" :fieldarr="['s_width','width']" :candisable="true" fieldname="a"></propertyfield>
+                                    h:<propertyfield style="width:60px" :obj="data" :fieldarr="['s_height','height']" :candisable="true" fieldname="a"></propertyfield>
+                                </div>
+                            </div>
+                            <div style="top:55px;left:120px;width:400px;color:black" class="ctrlBox" v-movable="1" v-if="bShowCtrl">
+                                <h2 class="title">控件列表</h2><Icon type="ios-close" @click.stop="bShowCtrl=false" style="position:absolute;top:13px;right:15px;"></Icon>
+                                <div v-for="group in ctrls">
+                                    <h3 class="titleSecond"> {{ group.desc }} </h3>
+                                    <span v-for="ctrl in group.list" draggable="true" @dragstart="drag(ctrl.create(),$event)" @mouseover="displayImg(ctrl,$event)" onmouseleave="hiddenImg()"> {{ ctrl.desc }} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divCtrl" v-cloak :style="{ width:layout.ctrlWidth + 'px' }">
+                            <Tabs type="card" style="width:100%;height:100%;">
+                                <Tab-Pane label="页面信息" name="base" style="text-align:left;padding-left:10px;width:100%;height: 100%">
+                                    <div style="width:100%;height:100%;overflow:auto">
+                                        <i-menu ref="menu" width="200" @on-select="SelectMenu" :active-name="selected" :open-names="opened">
+                                            <Submenu name="priv">
+                                                <template slot="title">
+                                                    权限({{privs.length}})&nbsp;&nbsp;&nbsp;
+                                                    <Icon type="ios-add-circle" color="green" @click.stop="addPriv"></Icon>
+                                                </template>
+                                                <Menu-Item v-for="item in privs" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'init')">
+                                                    {{ item.desc }}
+                                                    <Icon type="ios-close-circle" size="18" color="red" @click="del(privs,item.id,'参数')"></Icon>
+                                                </Menu-Item>
+                                            </Submenu>
+                                            <Submenu name="init">
+                                                <template slot="title">
+                                                    参数({{inits.length}})&nbsp;&nbsp;&nbsp;
+                                                    <Icon type="ios-add-circle" color="green" @click.stop="addInit"></Icon>
+                                                </template>
+                                                <Menu-Item v-for="item in inits" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'init')">
+                                                    {{ item.desc }}
+                                                    <Icon type="ios-close-circle" size="18" color="red" @click="del(inits,item.id,'参数')"></Icon>
+                                                </Menu-Item>
+                                            </Submenu>
+                                            <Submenu name="const">
+                                                <template slot="title">
+                                                    变量({{consts.length}})&nbsp;&nbsp;&nbsp;
+                                                    <Icon type="ios-add-circle" color="green" @click.stop="addConst"></Icon>
+                                                </template>
+                                                <template v-for="item in consts">
+                                                    <Submenu v-if="item.type=='2d'" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'const')">
+                                                        <template slot="title">
+                                                            <span @click="SelectMenu(item.id)">{{ item.desc }}</span>
+                                                            <Icon type="ios-close-circle" size="18" color="red" @click="del(consts,item.id,'变量')"></Icon>
+                                                        </template>
+                                                        <Menu-item :name="item.id+'_index'" :key="item.id+'_index'" draggable="true" :ondragstart="getDragStr('index','const')">
+                                                            序号
+                                                        </Menu-item>
+                                                        <Menu-item v-for="n in item.length" :name="item.id+'_'+(n - 1)" :key="item.id+'_'+(n - 1)" draggable="true" :ondragstart="getDragStr(item.id+'_'+(n - 1),'const')">
+                                                            第 {{ n }} 列
+                                                        </Menu-item>
+                                                    </Submenu>
+                                                    <Menu-Item v-else :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'const')">
+                                                        {{ item.desc }}
+                                                        <Icon type="ios-close-circle" size="18" color="red" @click="del(consts,item.id)"></Icon>
+                                                    </Menu-Item>
+                                                </template>
+                                            </Submenu>
+                                            <Submenu name="datasource">
+                                                <template slot="title">
+                                                    数据源({{datasources.length}})&nbsp;&nbsp;&nbsp;
+                                                    <Icon type="ios-add-circle" color="green" @click.stop="addDataSource"></Icon>
+                                                </template>
+                                                <Submenu v-for="(ds, index) in datasources" :name="ds.id" :key="ds.id" draggable="true" :ondragstart="getDragStr(ds.id,'datasource')">
+                                                    <template slot="title">
+                                                        {{ds.desc}}&nbsp;&nbsp;&nbsp;
+                                                        <Icon type="ios-create" size="18" color="green" @click.stop="editDataSource(index)"></Icon>
+                                                        <Icon type="ios-close-circle" size="18" color="red" @click="del(datasources,ds.id,'数据源')"></Icon>
+                                                    </template>
+                                                    <Menu-item :name="ds.id+'_index'" :key="ds.id+'_index'" draggable="true" :ondragstart="getDragStr('index','col')">
+                                                        序号
+                                                    </Menu-item>
+                                                    <Menu-Item v-for="item in ds.cols" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'col')">{{ item.desc }}</Menu-Item>
+                                                </Submenu>
+                                            </Submenu>
+                                            <Submenu name="dll">
+                                                <template slot="title">
+                                                    DLL({{dlls.length}})&nbsp;&nbsp;&nbsp;
+                                                    <Icon type="ios-add-circle" color="green" @click.stop="addDll"></Icon>
+                                                </template>
+                                                <Submenu v-for="(dll, index) in dlls" :name="dll.id" :key="dll.id" draggable="true" :ondragstart="getDragStr(dll.id,'dll')">
+                                                    <template slot="title">
+                                                        {{dll.desc}}&nbsp;&nbsp;&nbsp;
+                                                        <Icon type="ios-create" size="18" color="green" @click.stop="editDll(index)"></Icon>
+                                                        <Icon type="ios-close-circle" size="18" color="red" @click="del(dlls,dll.id,'Dll')"></Icon>
+                                                    </template>
+                                                    <Menu-Item v-for="item in dll.inputs" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'input')">i:{{ item.desc }}</Menu-Item>
+                                                    <Menu-Item v-for="item in dll.outputs" :name="item.id" :key="item.id" draggable="true" :ondragstart="getDragStr(item.id,'output')">o:{{ item.desc }}</Menu-Item>
+                                                </Submenu>
+                                            </Submenu>
+                                        </i-menu>
+                                    </div>
+                                </Tab-Pane>
+                                <Tab-Pane label="控件树" name="scripts">
+                                    <i-input size="small" icon="search" v-model="searchstring">
+                                        <i-select v-model="searchTag" slot="prepend" style="width: 80px;border11:0px;height11:20px;">
+                                            <i-option v-for="(value, key) in tags" :value="key" :key="key">{{ value }}</i-option>
+                                        </i-select>
+                                    </i-input>
+                                    <Tree :data="ctrltree" @on-select-change="selectTree"></Tree>
+                                </Tab-Pane>
+                            </Tabs>
+                        </div>
+                        <div id="divProp" v-cloak :style="{ height:layout.propHeight + 'px' }">
+                            <component v-bind:is="ctrlName" :data="data" :args="args"></component>
+                        </div>
+                        <div id="divMain">
+                            <div id="main" style="width:100%;height:100%;overflow:auto;border:1px solid #cccccc">
+                            </div>
+                        </div>
+                        <div id="divSelected" :style="{ height:layout.selectedHeight }">
+                            <div style="float:left;width:30%">
+                                <input type="button" class="ivu-btn ivu-btn-small" draggable="true" @dragstart="drag(item.id,item.tag,$event)" @click="click(item.id)" @dragover="dragover(item.id,item.tag,$event)" @drop="drop(item.id,item.tag,$event)" @dragend="stop"
+                                       v-for="item in path" :key="item.id" :item="item" :value="item.desc || item.tag" />
+                            </div>
+                            <div style="float:right;text-align:right;width:69%">
+                                <template v-for="(item,index) in children">
+                                    <input type="button" title="拖动到此位置" class="ivu-btn ivu-btn-small" @dragover="dragover(ctrl.id,ctrl.tag,$event)" @drop="drop(ctrl.id,ctrl.tag,$event,index)" @dragend="stop"
+                                           :value="index" />
+                                    <input type="button" class="ivu-btn ivu-btn-small" draggable="true" @dragstart="drag(item.id,item.tag,$event)" @click="click(item.id)" @dragover="dragover(item.id,item.tag,$event)" @drop="drop(item.id,item.tag,$event)" @dragend="stop"
+                                           :value="item.desc || item.tag" />
+                                </template>
+                            </div>
+                        </div>
+                        <div id="divAssist" style="display:none">
+                            <Modal :mask-closable="false" v-model="showScriptListDlg" title="脚本设置" class-name="vertical-center-modal" @on-ok="confirmScript" @on-cancel="cancelScript">
+                                <div v-if="title != ''" style="padding-bottom:1rem"> {{ title }} </div>
+                                <div v-for="(item,index) in scripts">
+                                    <Icon type="ios-close-circle" size="20" color="red" @click="delScript(index)"></Icon>
+                                    <Icon type="ios-arrow-round-up" size="20" v-if="index!=0" color="blue" @click="moveScript(index,true)"></Icon>
+                                    <Icon type="ios-arrow-round-up" size="20" v-else></Icon>
+                                    <Icon type="ios-arrow-round-down" size="20" v-if="index!=scripts.length-1" color="blue" @click="moveScript(index,false)"></Icon>
+                                    <Icon type="ios-arrow-round-down" size="20" v-else></Icon>
+                                    {{ getScriptString(item) }}
+                                </div>
+                                <Icon type="ios-add" size="20" color="blue" @click="showAddScript=true"></Icon>
+                                <div v-if="showAddScript" style="width:100%">
+                                    <hr style="width:100%" />
+                                    类型：
+                                    <select v-model="script.type">
+                                        <option value="select">获取数据</option>
+                                        <option value="update">保存数据</option>
+                                        <option value="invoke">调用接口</option>
+                                        <option value="redirect">跳转页面</option>
+                                        <option value="assign">变量赋值</option>
+                                        <option value="script">调用脚本</option>
+                                    </select>
+                                    <span v-if="script.type=='select'">
+                                        <select v-model="script.ds">
+                                            <option v-for="item in selectExecuteList()" :key="item.id" :value="item.id">{{ item.desc }}</option>
+                                        </select>
+                                    </span>
+                                    <span v-else-if="script.type=='update'">
+                                        <select v-model="script.ds">
+                                            <option v-for="item in saveExecuteList()" :key="item.id" :value="item.id">{{ item.desc }}</option>
+                                        </select>
+                                    </span>
+                                    <span v-else-if="script.type=='invoke'">
+                                        <select v-model="script.dll">
+                                            <option v-for="item in invokeExecuteList()" :key="item.id" :value="item.id">{{ item.desc }}</option>
+                                        </select>
+                                    </span>
+                                    <span v-else-if="script.type == 'assign'">
+                                    </span>
+                                    <span v-else="script.type=='script'">
+                                        <textarea v-model="script.value"></textarea>
+                                    </span>
+                                    <Icon type="ios-close" size="20" @click="showAddScript=false;"></Icon>
+                                    <Icon type="ios-checkmark" size="20" color="green" @click="addScript"></Icon>
+                                </div>
+                            </Modal>
+                            <Modal :mask-closable="false" v-model="showpdpctrlDlg" title="属性选择" class-name="vertical-center-modal" width="80" @on-ok="confirmcfgchoose" @on-cancel="cancelScript">
+                                <div v-if="showpdpctrlconfig" style="width:100%;height:400px;overflow-y:auto">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="width:20px"></td>
+                                            <td style="width:200px">属性名 </td>
+                                            <td>属性含义  </td>
+                                            <td>详细信息  </td>
+                                            <td style="width:100px">默认参数值 </td>
+                                        </tr>
+                                        <tr v-for="site in configdata">
+                                            <td><checkbox :value="site.enname" v-model="site.ifcheck"></checkbox></td>
+                                            <td>{{site.enname}} </td>
+                                            <td>{{site.cnname}}  </td>
+                                            <td>{{site.cndetail}}  </td>
+                                            <td>{{site.dfvalue}} </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </Modal>
+                        </div>
+                        <div id="divDataSource">
+                            <Modal :mask-closable="false" v-model="isShow"
+                                   title="设置数据源"
+                                   class-name="vertical-center-modal"
+                                   width="1200"
+                                   height="800"
+                                   @on-ok="ok"
+                                   @on-cancel="cancel">
+                                <Tabs type="card" :value="dataSource.type" @on-click="clickTab">
+                                    <Tab-pane label="单表数据源" name="single" :disabled="dataSource.db != '' && dataSource.db != undefined && dataSource.type != 'single'">
+                                        <Row>
+                                            <i-col span="6">
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        数据源描述
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-input v-model="dataSource.desc" placeholder="请输入数据源描述"></i-input>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        选择数据源
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-select v-model="dataSource.db" @on-change="selectDS" placeholder="请选择数据源">
+                                                            <i-option v-for="item in ds" :key="item[0]" :value="item[0]">{{ item[1] }}</i-option>
+                                                        </i-select>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        选择数据表
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-select v-model="dataSource.tbl" @on-change="selectTable" placeholder="请选择数据表" filterable>
+                                                            <i-option v-for="item in table" :key="item[0]" :value="item[0]">{{ item[1] }}</i-option>
+                                                        </i-select>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        选择数据列
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-select v-model="dataSourceCols" placeholder="请选择数据列" filterable multiple :label-in-value="true" @on-change="selectColumn">
+                                                            <i-option v-for="item in column" :key="item[0]" :value="item[0]">{{ item[1] }}</i-option>
+                                                        </i-select>
+                                                    </i-col>
+                                                </Row>
+                                            </i-col>
+                                            <i-col span="18">
+                                                <i-table height="500" :columns="tableData.columns" :data="tableData.data"></i-table>
+                                            </i-col>
+                                        </Row>
+                                    </Tab-pane>
+                                    <Tab-pane label="自定义数据源" name="simple" :disabled="dataSource.db != '' && dataSource.db != undefined && dataSource.type != 'simple'">
+                                        <Row>
+                                            <i-col span="6">
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        数据源描述
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-input v-model="dataSource.desc" placeholder="请输入数据源描述"></i-input>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        选择数据源
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-select v-model="dataSource.db" placeholder="请选择数据源">
+                                                            <i-option v-for="item in ds" :key="item[0]" :value="item[0]">{{ item[1] }}</i-option>
+                                                        </i-select>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        自定义SQL
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-input type="textarea" v-model="dataSource.sql" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></i-input>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-button type="primary" :loading="execLoading" long @click="execSql">
+                                                            <span v-if="execLoading">正在执行...</span>
+                                                            <span v-else>执行SQL</span>
+                                                        </i-button>
+                                                    </i-col>
+                                                </Row>
+                                                <div style="width: 100%; height: 295px; overflow-y: auto;">
+                                                    <Row v-if="conditionCols.length > 0">
+                                                        <i-col class="dataSourceText">
+                                                            条件列
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-for="col in conditionCols" key="col.name">
+                                                        <i-col span="12">
+                                                            {{col.name}}
+                                                        </i-col>
+                                                        <i-col span="12">
+                                                            <i-input v-model="col.desc" placeholder="条件列描述"></i-input>
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-if="dataCols.length > 0">
+                                                        <i-col class="dataSourceText">
+                                                            数据列
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-for="col in dataCols" key="col.name">
+                                                        <i-col span="12">
+                                                            {{col.name}}
+                                                        </i-col>
+                                                        <i-col span="12">
+                                                            <i-input v-model="col.desc" placeholder="数据列描述"></i-input>
+                                                        </i-col>
+                                                    </Row>
+                                                </div>
+                                            </i-col>
+                                            <i-col span="18">
+                                                <i-table height="500" :columns="tableData.columns" :data="tableData.data"></i-table>
+                                            </i-col>
+                                        </Row>
+                                    </Tab-pane>
+                                    <Tab-pane label="XML数据源" name="xml" :disabled="dataSource.db != '' && dataSource.db != undefined && dataSource.type != 'xml'">
+                                        <Row>
+                                            <i-col span="6">
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        数据源描述
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-input v-model="dataSource.desc" placeholder="请输入数据源描述"></i-input>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        选择数据源
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-select v-model="dataSource.db" placeholder="请选择数据源">
+                                                            <i-option v-for="item in ds" :key="item[0]" :value="item[0]">{{ item[1] }}</i-option>
+                                                        </i-select>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        XML节点(XML文件名:节点名)
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-input v-model="dataSource.node" placeholder="请输入XML节点"></i-input>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col>
+                                                        <i-button type="primary" :loading="execLoading" long @click="execXmlSql">
+                                                            <span v-if="execLoading">正在执行...</span>
+                                                            <span v-else>执行SQL</span>
+                                                        </i-button>
+                                                    </i-col>
+                                                </Row>
+                                                <Row>
+                                                    <i-col class="dataSourceText">
+                                                        执行SQL:{{xmlSql}}
+                                                    </i-col>
+                                                </Row>
+                                                <div style="width: 100%; height: 295px; overflow-y: auto;">
+                                                    <Row v-if="conditionCols.length > 0">
+                                                        <i-col class="dataSourceText">
+                                                            条件列
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-for="col in conditionCols" key="col.name">
+                                                        <i-col span="12">
+                                                            {{col.name}}
+                                                        </i-col>
+                                                        <i-col span="12">
+                                                            <i-input v-model="col.desc" placeholder="条件列描述"></i-input>
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-if="dataCols.length > 0">
+                                                        <i-col class="dataSourceText">
+                                                            数据列
+                                                        </i-col>
+                                                    </Row>
+                                                    <Row v-for="col in dataCols" key="col.name">
+                                                        <i-col span="12">
+                                                            {{col.name}}
+                                                        </i-col>
+                                                        <i-col span="12">
+                                                            <i-input v-model="col.desc" placeholder="数据列描述"></i-input>
+                                                        </i-col>
+                                                    </Row>
+                                                </div>
+                                            </i-col>
+                                            <i-col span="18">
+                                                <i-table height="500" :columns="tableData.columns" :data="tableData.data"></i-table>
+                                            </i-col>
+                                        </Row>
+                                    </Tab-pane>
+                                </Tabs>
+                            </Modal>
+                        </div>
+                        <div id="divDll">
+                            <Modal :mask-closable="false" v-model="isShow"
+                                   title="配置DLL"
+                                   class-name="vertical-center-modal"
+                                   width="1200"
+                                   height="800"
+                                   @on-ok="ok"
+                                   @on-cancel="cancel">
+                                <div>
+                                    描述：
+                                    <div style="display: inline-block; height: 30px; vertical-align:middle;">
+                                        <i-input v-model="dll.desc" style="width:150px" placeholder="请输入dll描述"></i-input>
+                                    </div>
+                                    &nbsp;&nbsp;dll：
+                                    <div style="display: inline-block; height: 30px;width:calc(100% - 300px); vertical-align:middle;">
+                                        <i-input v-model="dll.dllid" style="" placeholder="请按外部调用格式输入dll信息"></i-input>
+                                    </div>
+                                    <input type="button" value="读取参数" @click="readInputs" />
+                                </div>
+                                <div style="height:30px;line-height:30px;">
+                                    输入：<span style="padding:0 5px;" v-for="input in dll.inputs"> {{ input.desc }} </span>
+                                </div>
+                                <div style="">
+                                    输出：(如果返回结果是数组，那么可以加入多个返回值，第n个返回值对应数组第n个值，返回值不是数组的可以直接使用dll来绑定数据)
+                                    <br />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <template v-for="(output,index) in dll.outputs">
+                                        <span style="padding-left:5px;"> {{ output.desc }} </span>
+                                        <Icon type="ios-close-circle" size="14" color="red" @click="delOutput(index)"></Icon>
+                                    </template>
+                                    <Icon type="ios-add-circle" color="green" size="14" @click.stop="addOutput"></Icon>
+                                </div>
+                            </Modal>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        Vue.prototype.DesignDragOver = function (id, tag, event) {
+            if (PDPDesign.page.canMove({ id: id, tag: tag, e: event }))
+                event.preventDefault();
+            PDPDesign.Event.moveAt(id);
+        };
+        Vue.prototype.DesignClick = function (id, tag, event) { PDPDesign.Event.click(id, true); };
+        Vue.prototype.DesignMouseOver = function (id, tag, event) { PDPDesign.Event.moveAt(id); }
+        Vue.prototype.DesignDragEnter = function (id, tag, event) {
+            //PDPDesign.Event.locate(id);
+        };
+        Vue.prototype.DesignMouseOut = function (id, tag, event) { PDPDesign.Event.restoreMove(id); }
+        Vue.prototype.DesignDragLeave = function (id, tag, event) {
+        };
+        Vue.prototype.DesignDrop = function (id, tag, event) {
+            event.preventDefault();
+            PDPDesign.page.moveEnd({ id: id, tag: tag, e: event });
+        };
+    </script>
+    <script type="text/javascript">
+        var layout = { menuHeight: 60, ctrlWidth: 200, propHeight: 100, selectedHeight: 60 }
+    </script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_menu.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_ctrl.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_page.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_prop.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_datasource.js"></script>
+    <script type="text/javascript" src="/conn/pdpjs/pdpdesign_dll.js"></script>
+    <script type="text/javascript">
+        //var main = new Vue({ el: '#tdMain', data: { html: ''} });
+        function Preview() {
+        }
+        function Save() {
+            PDPDesign.Execute.save();
+        }
+        function Refresh() { PDPDesign.Execute.refresh(); }
+        function Copy() {
+            var links = document.getElementsByTagName("script");
+            var arr = [];
+            for (var i = 0; i < links.length; i++)
+                arr.push(links[i].href);
+            alert(arr.join("\r\n"));
+        }
+        function Public() {
+            var s = Ysh.Request.get("s");
+            if (PDPDesign.Execute.public())
+                if (!s)
+                    window.open("/html/" + PDPDesign.file + ".html");
+        }
+        function loadPage(pageName) {
+            PDPDesign.file = pageName;
+            vmMenu.filename = pageName;
+            $("#divContent").show();
+            if (PDPDesign.file) {
+                PDPDesign.Execute.load();
+                PDPDesign.Execute.preview("", main);
+                vmCtrl.page = PDPDesign.page.ctrls[0];
+                vmCtrl.inits = PDPDesign.page.inits || [];
+                vmCtrl.privs = PDPDesign.page.privs||[];
+                vmCtrl.consts = PDPDesign.page.consts || [];
+                vmCtrl.datasources = PDPDesign.page.datasources || [];
+                vmCtrl.dlls = PDPDesign.page.dlls || [];
+            }
+        }
+        function PublicAll() {
+            var v = PDP.dll("PDP2.0:PDP2.YshDocument.PublicAll", [window.pdp.value || ""]);
+            if (!v.check("发布"))
+                return;
+            if (v.value)
+                alert(v.value);
+        }
+        function Set() {
+            vmProp.ctrlName = "page_prop";
+            vmProp.data = PDPDesign.page;
+        }
+
+        function hiddenImg() {
+            $(".imgWrapper").remove();
+        }
+        $(document).ready(function () {
+            $("#divCtrl > div").children("div").eq(1).css({ "position": "absolute", "top": "48px", "bottom": "0", "width": "100%" })
+            $("#divCtrl > div").children("div").eq(1).children("div").css({ "overflow": "auto" })
+
+            $("#testBGIcon").colorpicker({
+                fillcolor: true,
+                success: function (o, color) {
+                    //$("#button7").css("background-color", color);
+                    var ctrl = vmProp.data;
+                    PDPDesign.Assist.set(ctrl, "a", "s_background-color", color);
+                }
+            });
+            $("#testIcon").colorpicker({
+                fillcolor: true,
+                success: function (o, color) {
+                    var ctrl = vmProp.data;
+                    PDPDesign.Assist.set(ctrl, "a", "s_color", color);
+                }
+            });
+            $("#testFSBIcon").click(function () {
+                var fS = parseInt($("#button7").css("font-size").replace("px", ""));
+                fS += 2;
+                $("#button7").css("font-size", fS);
+            });
+            $("#testFSSIcon").click(function () {
+                var fS = parseInt($("#button7").css("font-size").replace("px", ""));
+                if (fS > 10) {
+                    fS -= 2;
+                    $("#button7").css("font-size", fS);
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        window.pdp = new Vue({
+            el: '#divLeft',
+            data: {
+                files: [],
+                pageName: "",
+                selected: { isFold: true, foldid: -1 },
+                showAddFileDlg: false,
+                showEditDlg: false,
+                value: "",
+                filename: "",
+                filedesc: "",
+                filetype: "20",
+                templatefile: [],
+                editContent: "",
+                loadfile: ""
+            },
+            computed: {
+                showFiles: function () {
+                    if (this.value == "")
+                        return this.files;
+                    return this.filterTree(this.files, this.value);
+                },
+                templatedata: function () {
+                    var data = [];
+                    for (var i = 0; i < this.files.length; i++) {
+                        data.push(this.treeToSelect(this.files[i]));
+                    }
+                    return data;
+                }
+            },
+            methods: {
+                filterTree: function (nodes, v) {
+                    var data = [];
+                    for (var i = 0; i < nodes.length; i++) {
+                        var f = nodes[i];
+                        if (f.isFold) {
+                            var fNew = Ysh.Object.clone(f);
+                            fNew.children = this.filterTree(f.children, v);
+                            data.push(fNew);
+                        } else {
+                            if (f.filepath.indexOf(v) < 0)
+                                continue;
+                            data.push(f);
+                        }
+                    }
+                    return data;
+                },
+                treeToSelect: function (node) {
+                    var s = {};
+                    if (node.isFold) {
+                        if (node.children) {
+                            s.children = [];
+                            for (var i = 0; i < node.children.length; i++) {
+                                s.children.push(this.treeToSelect(node.children[i]));
+                            }
+                        }
+                    } else {
+                        s.value = node.filepath;
+                    }
+                    s.label = node.title;
+                    return s;
+                },
+                ok: function () {
+                    this.$Message.info('Clicked ok');
+                },
+                cancel: function () {
+                    this.$Message.info('Clicked cancel');
+                },
+                clickTree: function (data) {
+                    window.pdp.selected = data;
+                    if (!data.filepath) { //文件夹
+                        //window.pdp.selected = data.foldid;
+                    } else { //文件
+                        //window.pdp.selected = data.fileid;
+                        //window.pdp.pageName = "design.html?f=" + data.filepath;
+                        loadPage(data.filepath);
+                    }
+                },
+                renderContent: function (h, args) {
+                    var data = args.data;
+                    var icontype = "ios-paper-outline";
+                    var iconcolor = "";
+                    var textcolor = "";
+                    var selected = this.selected.isFold == data.isFold;
+                    if (selected) {
+                        if (this.selected.isFold)
+                            selected = (data.foldid == this.selected.foldid);
+                        else
+                            selected = (data.fileid == this.selected.fileid) || (data.filepath == this.selected.filepath);
+                    }
+                    if (data.isFold) {
+                        icontype = "ios-folder";
+                        //iconcolor = "yellow";
+                        //if (data.foldid == this.selected)
+                        //    selected = true;
+                    } else {
+                        //if (data.fileid == this.selected)
+                        //    selected = true;
+                    }
+                    if (selected)
+                        textcolor = "#d5e8fc";
+                    var tree = this;
+                    return h('span', { style: { display: 'inline-block', width: '100%' } }, [
+                        h('span', [
+                            h('Icon', { props: { type: icontype }, attrs: { color: iconcolor }, style: { marginRight: '8px' } }),
+                            h('span', { style: { backgroundColor: textcolor }, on: { click: function () { tree.clickTree(data); } } }, data.title)
+                        ]),
+                        h('span', { style: { display: 'inline-block', float: 'right', marginRight: '32px' } }, [])
+                    ]);
+                },
+                selectTree: function (o) {
+                    //当有render函数时无效
+                },
+                setTreeNode: function (node) {
+                    node.expand = true;
+                    node.find = function (id) {
+                        var idcol = "__id";
+                        var thisid = this[idcol];
+                        if (typeof thisid == "undefined") thisid = "";
+                        if (thisid == id)
+                            return this;
+                        if (!this.children)
+                            return null;
+                        for (var i = 0; i < this.children.length; i++) {
+                            var o = this.children[i].find(id);
+                            if (o != null)
+                                return o;
+                        }
+                        return null;
+                    };
+                },
+                loadFiles: function () {
+                    var d = Ysh.Request.get("d");
+                    var folds = [], files = [];
+                    if (!d) {
+                        folds = PDP.read("Design", "PDPDesignSql:FileTree/GetFolds", []);
+                        if (!folds.check("获取文件夹信息", true))
+                            return [];
+                        folds = folds.value;
+                        files = PDP.read("Design", "PDPDesignSql:FileTree/GetFiles", []);
+                        if (!files.check("获取文件信息", true))
+                            return [];
+                        files = files.value;
+                    }
+                    var lf = PDP.dll("PDP2.0:PDP2.Design.GetDesignFiles", []);
+                    if (lf.check("获取本地文件信息", true)) {
+                        lf = lf.value[0];
+                        folds.push(["/", "本地文件", ""]);
+                        for (var i = 0; i < lf.length; i++) {
+                            var arr = lf[i];
+                            if (arr.length == 3)
+                                folds.push(arr);
+                            else
+                                files.push(arr);
+                        }
+                    }
+                    //foldid,foldname,pfoldid
+                    //fileid,filedesc,filepath,foldid,filetype
+                    //拼树
+                    var ret = [];
+                    var tree = {}
+                    var vm = this;
+                    tree.add = function (data, columns, idcol, pcol, titlecol) {
+                        var length = data.length;
+                        do {
+                            length = data.length;
+                            var notmatch = [];
+                            for (var i = 0; i < data.length; i++) {
+                                var item = data[i];
+                                var pid = item[pcol]
+                                var node = this.find(pid);
+                                if (node != null) {
+                                    if (!node.children)
+                                        node.children = [];
+                                    var obj = Ysh.Array.toObject(item, columns);
+                                    vm.setTreeNode(obj, "__id");
+                                    obj.isFold = true;
+                                    obj.title = item[titlecol];
+                                    obj.label = obj.title;
+                                    obj["__id"] = item[idcol];
+                                    node.children.push(obj);
+                                } else {
+                                    notmatch.push(item);
+                                }
+                            }
+                            data = notmatch;
+                        } while (data.length > 0 && data.length != length);
+                    };
+                    tree.addLeaf = function (data, columns, pcol, titlecol) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var pid = item[pcol]
+                            var node = this.find(pid);
+                            if (node != null) {
+                                if (!node.children)
+                                    node.children = [];
+                                var obj = Ysh.Array.toObject(item, columns);
+                                vm.setTreeNode(obj, "__id");
+                                obj.isFold = false;
+                                obj.title = item[titlecol];
+                                obj.label = obj.title;
+                                node.children.push(obj);
+                            }
+                        }
+                    };
+                    this.setTreeNode(tree, "foldid");
+                    tree.add(folds, ["foldid", "foldname", "pfoldid"], 0, 2, 1);
+                    tree.addLeaf(files, ["fileid", "filedesc", "filepath", "foldid", "filetype"], 3, 1);
+                    ret = tree.children;
+                    return ret;
+                }, addFile: function () {
+                    if (this.selected.isFold) {
+                        this.showAddFileDlg = true
+                    } else {
+                        alert("请选择文件夹");
+                    }
+                }, delSelected: function () {
+                }, editSelected: function () {
+                    this.editContent = this.selected.title;
+                    this.showEditDlg = true
+                }, sureEdit: function () {
+                    if (this.selected.isFold) {
+                        var check = PDP.exec([{ type: "modify", sql: "PDPDesignSql:FileTree/UpdateFoldDesc", args: [this.selected.foldid, this.editContent] }]);
+                        if (!check.check("修改", true))
+                            return;
+                        this.selected.folddesc = this.selected.title = this.editContent;
+                    } else {
+                        var check = PDP.exec([{ type: "modify", sql: "PDPDesignSql:FileTree/UpdateFileDesc", args: [this.selected.fileid, this.editContent] }]);
+                        if (!check.check("修改", true))
+                            return;
+                        this.selected.filedesc = this.selected.title = this.editContent;
+                    }
+                }, sureAddFile: function () {
+                    var template = "empty";
+                    if (this.templatefile.length > 0)
+                        template = this.templatefile[this.templatefile.length - 1];
+                    var id = PDP.dll("PDP2.0:PDP2.Design.AddFile", [template, this.filedesc, this.filename, this.selected.foldid]);
+                    if (!id.check("保存文件", true))
+                        return;
+                    id = id.value[0];
+                    var node = { title: this.filedesc, fileid: id, filedesc: this.filedesc, filepath: this.filename, foldid: this.selected.foldid, filetype: this.filetype };
+                    if (!this.selected.children) {
+                        Vue.set(this.selected, "children", [node]);
+                    } else {
+                        this.selected.children.push(node);
+                    }
+                }
+            }, created: function () {
+                var f = Ysh.Request.get("f");
+                if (f) {
+                    this.selected = { isFold: false, filepath: f };
+                } else {
+                    this.selected = { isFold: true, foldid: -1 };
+                }
+                this.files = this.loadFiles();
+            }, mounted: function () {
+                Ysh.Refs.init();
+                var f = Ysh.Request.get("f");
+                if (f) {
+                    loadPage(f);
+                }
+                //PDP.dll("PDP2.0:PDP2.Test.SetSession", []);
+                //PDP.dll("PDP2.0:PDP2.Test.TestLog", ["{'userID':'0120d29c343c34f605b945ca4b66d2ee','userName':'管理','userSuper':1}"]);
+            }
+        });
+    </script>
+    <style>
+        #modalChartSetting .row-title {
+            height: 40px;
+        }
+
+        #modalChartSetting .center {
+            text-align: center;
+        }
+
+        #modalChartSetting .hide {
+            display: none;
+        }
+    </style>
+    <div id="divChartSetting" style="display:none">
+        <modal id="modalChartSetting" v-model="chartSettingModal" title="Echarts图表配置" :mask-closable="false" width="850" :scrollable="true" @on-ok="onOk" @on-cancel="onCancel">
+            <i-menu ref="base" mode="horizontal" :active-name="menuActiveName.base" @on-select="onchartMenuSelect(tabs)" style="height: 40px;">
+                <menu-item v-for="(value,key,index) in tabs" v-show="value.isShowTabs" :forActiveName="'base'" :name="key" :contentName="key" :key="key" style="padding-left: 10px; padding-right: 10px; text-align: center; height: 40px; line-height: 40px;">
+                    {{value.text}}
+                </menu-item>
+            </i-menu>
+            <div v-for="(value,key,index) in tabs" style="width: 100%" v-show="value.isShowContent">
+                <template v-if="key==='xAxis'||key==='yAxis'||key==='series'||key==='dataZoom'">
+                    <row style="width: 100%; height: 100%;">
+                        <i-col span="6">
+                            <i-menu :ref="key" @on-select="onchartMenuSelect(tabs[key].subTabs)" width="auto" :active-name="menuActiveName[key]">
+                                <menu-item v-for="(subTabValue,subTabKey) in tabs[key].subTabs"
+                                           :forActiveName="key" :name="subTabKey" :contentName="subTabKey" :key="subTabKey"
+                                           style="padding-left: 0px; padding-right: 0;" class="center">
+                                    {{subTabValue.text}}
+                                </menu-item>
+                            </i-menu>
+                        </i-col>
+                        <i-col span="18">
+                            <echarts-setting v-for="(valueArray,indexArray) in formList[key]" :setting="valueArray" :ctitle="collapseTitle[key]?collapseTitle[key][indexArray]:undefined"
+                                             :key="indexArray" v-show="tabs[key].subTabs[indexArray].isShowContent" :contentName="key">
+                            </echarts-setting>
+                        </i-col>
+                    </row>
+                </template>
+                <template v-else>
+                    <echarts-setting :setting="formList[key]" :ctitle="collapseTitle[key]">
+                    </echarts-setting>
+                </template>
+            </div>
+        </modal>
+    </div>
+    <!--自定义组件，图表配置加载-->
+    <template id="echarts-setting">
+        <div>
+            <row class="center row-title" type="flex" justify="center" align="middle">
+                <i-col :span="8">描述</i-col>
+                <i-col :span="8">值</i-col>
+                <i-col :span="8">说明</i-col>
+            </row>
+            <div style="height: 100%;">
+                <template v-for="(valueFormList,keyFormList,indexFormList) in setting">
+                    <chart-control v-if="valueFormList.controlType" :control="valueFormList"></chart-control>
+                    <template v-else-if="Array.isArray(valueFormList)" v-for="(valueArray,indexArray) in valueFormList">
+                        <template v-for="(valueArrayJson,keyArrayJson,indexArrayJson) in valueArray">
+                            <chart-control v-if="valueArrayJson.controlType!=undefined" :control="valueArrayJson"></chart-control>
+                            <collapse v-else>
+                                <panel style="text-align: left;">
+                                    {{ctitle[keyFormList][indexArray][keyArrayJson].title}}
+                                    <echarts-setting slot="content" :setting="valueArray" :ctitle="ctitle[keyFormList][keyArrayJson]">
+                                    </echarts-setting>
+                                </panel>
+                            </collapse>
+                        </template>
+                    </template>
+                    <collapse v-else-if="valueFormList.controlType===undefined" v-show="ctitle[keyFormList].isShow">
+                        <panel style="text-align: left;">
+                            {{ctitle[keyFormList].title}}
+                            <echarts-setting slot="content" :setting="valueFormList" :ctitle="ctitle[keyFormList]">
+                            </echarts-setting>
+                        </panel>
+                    </collapse>
+                </template>
+            </div>
+        </div>
+    </template>
+    <!--自定义组件，图表控件-->
+    <template id="chart-control">
+        <row v-show="control.isShow===undefined?true:control.isShow" type="flex" justify="center" align="middle" class="center row-title">
+            <i-col :span="8">
+                {{control.desc}}
+            </i-col>
+            <i-col :span="8">
+                <i-input v-if="control.controlType==='input'" v-model="control.myValue" :disabled="control.disabled"></i-input>
+                <checkbox v-else-if="control.controlType==='checkbox'" v-model="control.myValue" :disabled="control.disabled" @on-change="doTopEvent        (control.event,control.myValue,control.args)">
+                </checkbox>
+                <i-select v-else-if="control.controlType==='select'" v-model="control.myValue" :clearable="control.clearable" :disabled="control.disabled" :filterable="control.filterable">
+                    <i-option v-for="(option,key,index) in control.option" :value="typeof(option)==='object'?option.value:option" :key="typeof(option)==='object'?      option.value:option">
+                        {{typeof(option)==="object"?option.label:option}}
+                    </i-option>
+                </i-select>
+                <color-picker v-else-if="control.controlType==='color'"
+                              v-model="control.myValue" :disabled="control.disabled" :recommend="control.recommend" :alpha="control.alpha">
+                </color-picker>
+            </i-col>
+            <i-col :span="8" style="padding: 0 2px;">
+                {{control.detail?control.detail:"无"}}
+            </i-col>
+        </row>
+    </template>
+    <script src="/conn/pdpjs/pdpdesign_chartsetting.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+	<GetGNameTypeEnum>
+    <![CDATA[
+    connectline:1, bus:2, busbarsection:2, busdis:2, dtext:6,
+    acline:7, aclinesegment:7, aclineend:7, dcline:7, dclineend:7, transformer:7, transformer2:7, transformer3:7, cbreaker:7, disconnector:7, grounddisconnector:7, generator:7, zxddd:7,
+    energyconsumer:7, capacitor:7, reactor:7, capacitor_p:7, reactor_p:7, capacitor_s:7, reactor_s:7, fuse:7, protect:7, state:7, status:7,
+    token:7, terminal:7, ascoil:7, arrester:7, pt:7, ct:7, powerflow:7, sensitive:7, thermometer:7, dyradar:7, gunter:7, radar:7, dollybreaker:7,
+	rcbreaker:7, bdzdis:7, cbreakerdis:7, fzxdis:7, hwgdis:7, kbsdis:7, energyconsumerdis:7, pole:7, protectdis:7, protectbyset:7, gterminaldc:7,
+	transformerdis:7, zhaiwaidaozha:7, zhaiwaijiedidaozha:7, zwrcdis:7, feedline:7,
+    text:12, pin:13, line:14, rect:15, roundrect:16, circle:17, ellipse:18, polyline:19, polygon:20, triangle:21, image:22, circlearc:23, 
+    ellipsearc:24, parallelrect:25, diamond:26, poke:28, gzp:29, cube:30, handline:31, grid:32, handgon:33
+    ]]>
+	</GetGNameTypeEnum>
+	
+	<!-- 图元类型id，不分组 -->
+  <!-- connectline:1001|34000000，1001表示图元类型id，34000000表示G文件中图元id的命名规则（特征符+后五位序号）-->  
+	<GetGNameSubTypeEnum>
+    <![CDATA[
+    connectline:1001|34000000, bus:1002|30000000, busbarsection:1003|30000000, dtext:1004|33000000, acline:1005|31000000, aclinesegment:1005|31000000, aclineend:1006|36000000, transformer2:1007|102000000, transformer3:1008|103000000, cbreaker:1009|100000000, disconnector:1010|101000000, 
+    grounddisconnector:1011|111000000, generator:1012|104000000, energyconsumer:1013|32000000, capacitor:1014|113000000, reactor:1015|114000000, capacitor_p:1016|113000000, reactor_p:1017|114000000, capacitor_s:1018|113000000, reactor_s:1019|114000000, fuse:1020|137000000,
+    protect:1021|127000000, state:1022|109000000, status:1023|126000000, token:1024|, terminal:1025|112000000, ascoil:1026|132000000, arrester:1027|133000000, pt:1028|107000000, ct:1029|108000000, powerflow:1030|,
+    sensitive:1031|134000000, thermometer:1032|, dyradar:1033|, gunter:1034|, radar:1035|, text:1036|8000000, pin:1037|18000000, line:1038|1000000, rect:1039|2000000, roundrect:1040|7000000,
+    circle:1041|3000000, ellipse:1042|4000000, polyline:1043|6000000, polygon:1044|5000000, triangle:1045|23000000, image:1046|14000000, poke:1047|17000000, circlearc:1048|9000000, ellipsearc:1049|10000000, parallelrect:1050|15000000,
+    diamond:1051|13000000, gzp:1052|135000000, dollybreaker:1053|110000000, cube:1054|11000000, handline:1055|12000000, other:1056|130000000, grid:1057|57000000, zxddd:1058|136000000, rcbreaker:1059|124000000, transformer:1060|10600000,
+	bdzdis:1061|, cbreakerdis:1062|117000000, fzxdis:1063|, hwgdis:1064|, kbsdis:1065|, energyconsumerdis:1066|, pole:1067|116000000, protectdis:1068|, protectbyset:1069|, gterminaldc:1070|,
+	transformerdis:1071|115000000, zhaiwaidaozha:1072|184000000, zhaiwaijiedidaozha:1073|, zwrcdis:1074|, busdis:1075|380000000, handgon:1076|13000000, feedline:1077|35000000, dcline:1078|70000000, dclineend:1079|,
+	unknown:1999|199900000
+    ]]>
+	</GetGNameSubTypeEnum>
+
+	<!-- 导入哪些目录的模板 -->
+	<ImportTemplateDirectory>
+		<![CDATA[
+		arrester, ascoil, auto_load, capacitor, cbreaker, chzyb, ct, disconnector, dollybreaker, fuse, generator, grounddisconnector, gz, gzp, jzzt, load_dis, 
+		meta, other, powerflow, protect, protectbyset, pt, rcbreaker, reactor, rectifierinverter, sensitive, state, status, terminal, terminalunit, token, 
+		transformer2, transformer3, zxddd
+    ]]>
+	</ImportTemplateDirectory>
+</ROOT>

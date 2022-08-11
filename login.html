@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>PDP2.0</title>
+        <meta charset="utf-8">
+        <style type="text/css">
+            html,body{
+                height: 100%;
+            }
+
+            .login-wrapper{
+                height: 100%;
+                background: url('/i/login/loginbc.png') no-repeat 0 0 / 100% 100%;
+                position: relative;
+            }
+
+            .logo{
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+
+            #form1{
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .form-ctrl{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .app-title{
+                margin-bottom: 30px;
+                text-align: center;
+                color: #fff;
+                font-size: 36px;
+            }
+
+            .username,.password{
+                position: relative;
+            }
+
+            .password{
+                margin-top: 20px;
+            }
+
+            .username > div,
+            .password > div{
+                text-align: left;
+                margin-bottom: 10px;
+            }
+
+            .username > img, 
+            .password > img{
+                position: absolute;
+                top: 42px;
+                left: 14px;
+            }
+
+            #txtUserid,#txtPwd{
+                width: 450px;
+                height: 35px;
+                border: 1px solid #15c6c4;
+                border-radius: 5px;
+                background: #0000;
+                color: #fff;
+                font-size: 14px;
+                padding-left: 50px;
+                background: #125f6bb3;
+            }
+
+            #btnLogin{
+                width: 500px;
+                height: 35px;
+                background: url(/i/frmMain_files/loginBtnBg.png) no-repeat;
+                border-style: none;
+                color: #fff;
+                background-size: 100% 100%;
+                cursor: pointer;
+                margin-top: 30px;
+            }
+
+            :focus-visible {
+                outline-style: none;
+            }
+
+            input:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 1000px #164C52 inset;
+                text-shadow: 0 0 0px #fff, 0 0 0px #fff;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .errMsg {
+                color: #c31212;
+                margin-top: 10px;
+                text-align: right;
+            }
+        </style>
+        <script type="text/javascript" src="/conn/jsfile/sm/core.js"></script>
+        <script src="/conn/jsfile/sm/jsbn.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/jsbn2.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/prng4.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/rng.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/ec.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/ec-patch.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/ecdsa-modified-1.0.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/sm3.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/sm3-sm2-1.0.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/ecparam-1.0.js" type="text/javascript"></script>
+        <script src="/conn/jsfile/sm/sm2.js" type="text/javascript"></script>
+        <script type="text/javascript" charset="gb2312" src="/conn/jsfile/jquery.min.js"></script>
+        <script type="text/javascript" charset="gb2312" src="/conn/jsfile/pdp.core.js"></script>
+        <script type="text/javascript" charset="gb2312" src="/conn/jsfile/md5.js"></script>
+    </head>
+    <body style="overflow: hidden; margin: 0" scroll="auto" onload="initWindow()" onkeydown="keyLogin()">
+        <div class="login-wrapper">
+            <img class="logo" src="/i/login/logo.png" />
+            <form name="form1" id="form1">
+                <div class="form-ctrl">
+                    <div class="app-title">
+                        <span>PDP2.0框架</span>
+                    </div>
+                    <div class="username">
+                        <div>
+                            <span style="color: #fff;">用户名：</span>  
+                        </div>
+                        <img src="/i/frmMain_files/username.png" />
+                        <input autocomplete="off" type="text" name="txtUserid" id="txtUserid" placeholder="请输入用户名" />
+                    </div>
+                    <div class="password">
+                        <div>
+                            <span style="color: #fff;">密码：</span>  
+                        </div>
+                        <img src="/i/frmMain_files/mima.png" />
+                        <input autocomplete="off" type="password" name="txtPwd" id="txtPwd" placeholder="请输入密码" />
+                    </div>
+                    <span id="lbState" class="errMsg"></span>
+                    <button id="btnLogin" type="button" onclick="onLogin()">登录</button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            function onLogin() {
+                form1.txtUserid.disabled = false;
+                var flag = "_u_";
+                var userid = sm2.encrypt(form1.txtUserid.value);
+                //form1.txtUserid.value = sm2.encrypt(userid);
+                var pwd = sm2.encrypt(form1.txtPwd.value);
+                //form1.txtPwd.value = sm2.encrypt(pwd);
+                //form1.txtCode.value = sm2.encrypt(hex_md5(userid + flag + pwd));
+                // var cbPwd = form1.cbxPWD.checked ? "1" : "0";
+                $.ajax({
+                    url: "/conn/ashx/LoginHandler.ashx",
+                    dataType: "json",
+                    type: "post",
+                    data: { postType: "login", userid: userid, userpwd: pwd, cbpwd: 0 },
+                    success: function (data) {
+                        if (data.code != "200" || data.msg != "") {
+                            $("#lbState").text(data.msg);
+                            return false;
+                        }
+                        window.location.href = "/html/index.html";
+                    },
+                    error: function (data) {
+                        console.log(data.responseText);
+                    }
+                });
+                return false;
+            }
+            function dcloudLogin() {
+                if (Ysh.Request.get("from") !== "dcloud")
+                    return;
+                $.ajax({
+                    url: "/conn/ashx/LoginHandler.ashx",
+                    dataType: "json",
+                    type: "post",
+                    data: { postType: "login", from: "dcloud", userid: Ysh.Request.get("l") },
+                    success: function (data) {
+                        if (data.code == "302") {
+                            if (data.data.loginUrl == "") {
+                                alert("请配置单点登录地址！")
+                                return;
+                            }
+                            window.location.href = data.data.loginUrl;
+                            return;
+                        }
+                        if (data.code != "200" || data.msg != "") {
+                            $("#lbState").text(data.msg);
+                            return false;
+                        }
+                        window.location.href = "/html/index.html";
+                    },
+                    error: function (data) {
+                        console.log(data.responseText);
+                    }
+                });
+                return false;
+            }
+            function initWindow() { form1.txtUserid.focus(); }
+            function keyLogin(){
+                if (event.keyCode==13) 
+                onLogin(); 
+            }
+
+            function setLoginInfo() {
+                $.ajax({
+                    url: "/conn/ashx/LoginHandler.ashx",
+                    dataType: "json",
+                    type: "post",
+                    data: { postType: "getLoginInfo", from: Ysh.Request.get("from") },
+                    success: function (data, s, r) {
+                        if (data.data && data.data.isLogin) {
+                            window.location.href = "/html/index.html";
+                            return;
+                        }
+                        if (data.code != "200") {
+                            //alert(data.msg);
+                            return false;
+                        }
+                        data = data.data;
+                        if (data == "")
+                            return false;
+                        form1.txtUserid.value = data.userid;
+                        // form1.txtPwd.value = data.userpwd;
+                        // form1.cbxPWD.checked = data.cbpwd;
+                    },
+                    error: function (data) {
+                        console.log(data.responseText);
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                dcloudLogin();
+                setLoginInfo();
+            });
+        </script>
+    </body>
+</html>

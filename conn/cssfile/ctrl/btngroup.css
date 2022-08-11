@@ -1,0 +1,43 @@
+﻿.btn-group-wrapper{
+    display: flex;
+}
+
+.btn-group-wrapper.dc{
+    align-items: start;
+}
+
+.btn-group-wrapper .btn-default{
+    background: var(--btn-default-bg);
+    /* margin: 0 5px; */
+    border-radius: 5px;
+    padding: 2px 10px;
+    color: var(--btn-default-color);
+    cursor: pointer;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    border-color: var(--btn-default-border-color);
+    border-width: 1px;
+    border-style: solid;
+}
+
+.btn-group-wrapper.especial{
+    content: '如需其他样式,把这条content属性删掉,自己在这添加';
+}
+
+.btn-group-wrapper .btn-select{
+    color: var(--btn-default-active-color);
+    background-color: var(--btn-default-active-bg);
+    border-color: var(--btn-default-active-border-color);
+}
+
+.btn-group-wrapper button.btn-default:disabled {
+    color: #c5c8ce;
+    background-color: #f7f7f7;
+    border-color: #dcdee2;
+    cursor: not-allowed;
+}
+
+.img-post{
+    flex-direction: row-reverse;
+}

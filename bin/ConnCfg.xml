@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ROOT>
+  <ConnLog Name="审计日志">
+    <IPCFG><![CDATA[ 10.15.5.139; Pooling=false; Allow User Variables=True; ]]></IPCFG>
+    <DATABASE><![CDATA[monitorsignal_prepay]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ MYSQL ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[root]]></DBUSER>
+    <PASSWORD><![CDATA[c7727699c05c1179cf926c1ae773ae9a8305ebb9a9fa9f1a3225fcf188b6c71a]]></PASSWORD>
+    <SETTINGS>
+      <BATCHEX><![CDATA[BEGIN;,COMMIT;]]></BATCHEX>
+    </SETTINGS>
+  </ConnLog>
+  <APPUSER>
+    <IPCFG><![CDATA[ 10.15.5.139; Pooling=false; Allow User Variables=True; ]]></IPCFG>
+    <DATABASE><![CDATA[appusertest]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ MYSQL ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[root]]></DBUSER>
+    <PASSWORD><![CDATA[c7727699c05c1179cf926c1ae773ae9a8305ebb9a9fa9f1a3225fcf188b6c71a]]></PASSWORD>
+    <SETTINGS>
+      <BATCHEX><![CDATA[BEGIN;,COMMIT;]]></BATCHEX>
+    </SETTINGS>
+  </APPUSER>
+  <DeviceParam Name="设备库">
+    <IPCFG><![CDATA[ 10.15.5.139; Pooling=false; Allow User Variables=True; ]]></IPCFG>
+    <DATABASE><![CDATA[appusertest]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ MYSQL ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[root]]></DBUSER>
+    <PASSWORD><![CDATA[c7727699c05c1179cf926c1ae773ae9a8305ebb9a9fa9f1a3225fcf188b6c71a]]></PASSWORD>
+    <SETTINGS>
+      <BATCHEX><![CDATA[BEGIN;,COMMIT;]]></BATCHEX>
+    </SETTINGS>
+  </DeviceParam>
+  <ConnMain Name="本系统">
+    <IPCFG><![CDATA[ 10.15.5.139; Pooling=false; Allow User Variables=True; ]]></IPCFG>
+    <DATABASE><![CDATA[monitorsignal_prepay]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ MYSQL ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[root]]></DBUSER>
+    <PASSWORD><![CDATA[c7727699c05c1179cf926c1ae773ae9a8305ebb9a9fa9f1a3225fcf188b6c71a]]></PASSWORD>
+    <SETTINGS>
+      <BATCHEX><![CDATA[]]></BATCHEX>
+    </SETTINGS>
+  </ConnMain>
+  <Design1 Name="设计">
+    <IPCFG><![CDATA[ 10.15.0.55 ]]></IPCFG>
+    <DATABASE><![CDATA[YS_FPGF]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ DM7 ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[YS_FPGF]]></DBUSER>
+    <PASSWORD><![CDATA[59caf0c3f19b293a9f0e7798c942bbeb66d90db08dd8aef619cb227b5b86f9c5]]></PASSWORD>
+  </Design1>
+  <ASK Name="问答">
+    <IPCFG><![CDATA[ 10.15.0.55 ]]></IPCFG>
+    <DATABASE><![CDATA[YS_FPGF]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[ DM7 ]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[YS_FPGF]]></DBUSER>
+    <PASSWORD><![CDATA[59caf0c3f19b293a9f0e7798c942bbeb66d90db08dd8aef619cb227b5b86f9c5]]></PASSWORD>
+  </ASK>
+  <PSGRAPH Name="图形">
+    <IPCFG>
+      <![CDATA[192.168.5.159:5236]]>
+    </IPCFG>
+    <DATABASE><![CDATA[PSGRAPH]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[DM7]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[YS_LY]]></DBUSER>
+    <PASSWORD><![CDATA[f7f82b74d87a2559476b8f233406baac3e47c338146bf2330a52391742045c16]]></PASSWORD>
+  </PSGRAPH>
+  <PSGRAPH_DATA>
+    <IPCFG>
+      <![CDATA[192.168.5.159:5236]]>
+    </IPCFG>
+    <DATABASE><![CDATA[PSGRAPH_DATA_EMS]]></DATABASE>
+    <PROVIDER>
+      <![CDATA[DM7]]>
+    </PROVIDER>
+    <DBUSER><![CDATA[YS_LY]]></DBUSER>
+    <PASSWORD><![CDATA[f7f82b74d87a2559476b8f233406baac3e47c338146bf2330a52391742045c16]]></PASSWORD>
+  </PSGRAPH_DATA>
+  <CacheREDIS>
+    <IPCFG><![CDATA[10.15.5.139]]></IPCFG>
+    <PORT><![CDATA[6379]]></PORT>
+    <PASSWORD><![CDATA[]]></PASSWORD>
+    <DATABASE><![CDATA[1]]></DATABASE>
+    <CHANNEL>
+      <yshpush></yshpush>
+    </CHANNEL>
+  </CacheREDIS>
+</ROOT>

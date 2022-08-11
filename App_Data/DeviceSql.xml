@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+  <GetDeptType>
+    <![CDATA[
+    select * from dbDeptType
+    ]]>
+  </GetDeptType>
+  <!--DeviceParam-->
+  <InsertAddParam>
+    <![CDATA[
+      if exists (select 1 from tbDeviceParam where paramCode='{0}')
+        update tbDeviceParam set typeIdx={1}, paramName='{2}',paramDesc='{3}' where paramCode='{0}'
+      else
+        insert into tbDeviceParam (paramCode,typeIdx,paramName,paramDesc)
+        values ('{0}',{1},'{2}','{3}')
+    ]]>
+  </InsertAddParam>
+  <RemoveAddParamByType>
+    <![CDATA[    
+    delete tbDeviceParamValue from tbDeviceParamValue a join tbDeviceParam b on a.paramCode=b.paramCode where b.typeIdx={0}
+    delete from tbDeviceParam where typeIdx={0}
+    ]]>
+  </RemoveAddParamByType>
+  <RemoveAddParam>
+    <![CDATA[
+    delete from tbDeviceParamValue where paramCode='{0}'
+    delete from tbDeviceParam where paramCode='{0}'
+    ]]>
+  </RemoveAddParam>
+  <SelectAddParam>
+    <![CDATA[
+    select * from tbDeviceParam a where 1=1
+    ]]>
+  </SelectAddParam>
+  <AddParamTypeCondition>
+    <![CDATA[
+    and a.typeIdx = {0}
+    ]]>
+  </AddParamTypeCondition>
+  <AddParamCodeCondition>
+    <![CDATA[
+    and a.paramCode in ({0})
+    ]]>
+  </AddParamCodeCondition>
+  <SelectParamValue>
+    <![CDATA[
+    select b.*,a.paramDesc from tbDeviceParamValue b join tbDeviceParam a on a.paramCode=b.paramCode where 1=1
+    ]]>
+  </SelectParamValue>
+  <ParamValueIDCondition>
+    <![CDATA[
+    and b.deviceidx = {0}
+    ]]>
+  </ParamValueIDCondition>
+  <ParamNameOrder>
+    <![CDATA[
+    order by a.paramDesc
+    ]]>
+  </ParamNameOrder>
+  <InsertParamValue>
+    <![CDATA[
+    if exists (select 1 from tbDeviceParamValue where deviceidx={0} and paramCode='{1}')
+      update tbDeviceParamValue set paramValue='{2}' where deviceidx={0} and paramCode='{1}'
+    else
+      insert into tbDeviceParamValue (deviceidx, paramCode, paramvalue) values ({0},'{1}','{2}')
+    ]]>
+  </InsertParamValue>
+  <!--DbDept-->
+  <GetDeptInform>
+    <![CDATA[
+    select deptIdx, deptName, deptDesc, deptType, deptShortName, pDeptIdx, deptnum
+    from dbDept
+    ]]>
+  </GetDeptInform>
+  <!--Device-->
+  <GetDbDevice>
+    <![CDATA[
+    select e.*, '' scbh, '' doubleName, 0 rl, 0 nylx,0 jzlx, 0 ratecapacity, f.dispatchName, d.typeName, c.voltageDesc, b.stationDesc, a.deptShortName, q.emskey, q.pmsid 
+    from dbDevice e
+    left join tbDeviceRelation q on e.deviceIdx=q.deviceIdx 
+    left join tbDispatchArea f on f.dispatchValue=e.dispatchDept
+    left join dbType d on e.typeIdx=d.typeIdx
+    left join dbVoltage c on c.voltageIdx=e.voltageIdx 
+    left join dbStation b on b.stationIdx=e.stationIdx
+    left join dbDept a on b.deptIdx=a.deptIdx
+    where 1=1
+    ]]>
+  </GetDbDevice>
+  <GetDeviceRela>
+    <![CDATA[
+    select e.* from dbDevice e join tbDeviceRelation f on e.deviceIdx=f.deviceIdx where 1=1
+    ]]>
+  </GetDeviceRela>
+  <GetDbStation>
+    <![CDATA[
+    select b.*, c.voltageDesc, a.deptShortName from dbStation b
+    left join dbVoltage c on c.voltageIdx=b.voltageIdx 
+    left join dbDept a on b.deptIdx=a.deptIdx
+    where 1=1
+    ]]>
+  </GetDbStation>
+  <DeviceCondition>
+    <![CDATA[
+    and e.deviceidx in ({0})
+    ]]>
+  </DeviceCondition>
+  <DeviceKeyCondition>
+    <![CDATA[
+    and (e.deviceName like '%{0}%' or e.deviceDesc like '%{0}%')
+    ]]>
+  </DeviceKeyCondition>
+  <DeviceTypeCondition>
+    <![CDATA[
+    and e.devicetype = {0}
+    ]]>
+  </DeviceTypeCondition>
+  <TypeCondition>
+    <![CDATA[
+    and d.typeIdx in ({0})
+    ]]>
+  </TypeCondition>
+  <VoltageCondition>
+    <![CDATA[
+    and c.voltageIdx={0}
+    ]]>
+  </VoltageCondition>
+  <StationCondition>
+    <![CDATA[
+    and b.stationIdx={0}
+    ]]>
+  </StationCondition>
+  <StationKeyCondition>
+    <![CDATA[
+    and (b.stationName like '%{0}%' or b.stationDesc like '%{0}%')
+    ]]>
+  </StationKeyCondition>
+  <DeviceStationCondition>
+    <![CDATA[
+    and (b.stationIdx={0} or (e.deviceDesc in (select scbh doubleName from dbDevice e join tbDevice_KaiGuan i on e.deviceidx=i.deviceidx where e.stationIdx={0} and e.typeIdx=1) and e.typeIdx=21))
+    ]]>
+  </DeviceStationCondition>
+  <DeptCondition>
+    <![CDATA[
+    and a.deptIdx={0}
+    ]]>
+  </DeptCondition>
+  <StatusCondition>
+    <![CDATA[
+    and e.deviceType in ({0})
+    ]]>
+  </StatusCondition>
+  <DeleteDbStation>
+    <![CDATA[
+    delete from tbStationRelation where 1=1 {0};
+    delete from dbStation where 1=1 {0};
+    ]]>
+  </DeleteDbStation>
+  <DeleteDbDevice>
+    <![CDATA[
+    delete from tbDeviceRelation where 1=1 {0};
+    delete from dbDevice where 1=1 {0};
+    ]]>
+  </DeleteDbDevice>
+  <!--PMSRelation-->
+  <GetPMSDatabase>
+    <![CDATA[
+    SELECT {0} FROM OPENQUERY(BIETL, '{1}') a {2}
+    ]]>
+  </GetPMSDatabase>
+  <GetPMSType>
+    <![CDATA[
+    SELECT a.sblx_code 类型编码, a.sblx_name 类型名称, case a.SBLX_TABLE when ''EQU_BD_EQUIPMENT'' then ''变电'' else ''输电'' end 设备大类
+  FROM pms_u.equ_gg_cfg_type_loc a where (sblx_code in (''0201'',''0101'') or sblx_code like ''03__'')
+  and SBLX_TABLE not like ''EQU_PD%''
+    ]]>
+  </GetPMSType>
+  <GetPMSStation>
+    <![CDATA[
+    SELECT a.obj_id 变电站编码, a.bdzmc 变电站名称, a.dydj 电压等级
+  FROM pms_u.equ_bd_yw_bdz a
+    ]]>
+  </GetPMSStation>
+  <GetPMSBDDevice>
+    <![CDATA[
+    SELECT a.obj_id 设备编号, a.yxbh 运行编号, a.sbmc 设备名称, e.sblx_name 设备类型, a.dydj 电压等级, a.sccj 生产厂家,
+    a.sbxh 设备型号, a.zcdw 资产单位, c.dddw 调度单位, a.tyrq 投运日期, d.BDZMC 所属变电站,
+    a.ccrq 出厂日期, a.ccbh 出厂编号, a.yxzt 运行状态, a.bz 备注, b.yxbh 运行位置, c.JGMC 所属间隔
+    FROM 
+    (
+    select * from pms_u.equ_bd_equipment a where a.sblx like ''03__'' and a.DYDJ in (22,23,25,32,33,35,36,37,NULL)
+    )
+    a left join pms_u.equ_bd_yw_yxwz b on a.ls_yxwz_id=b.obj_id
+    left join pms_u.equ_bd_yw_jg c on b.ls_jg=c.obj_id
+    left join pms_u.equ_bd_yw_bdz d on c.ls_bdz=d.obj_id
+    left join pms_u.equ_gg_cfg_type_loc e on a.sblx=e.sblx_code
+    ]]>
+  </GetPMSBDDevice>
+  <GetPMSSDDevice>
+    <![CDATA[
+    SELECT a.obj_id 设备编号, b.xlmc 运行编号, a.sbmc 设备名称, a.sblx 设备类型, a.dydj 电压等级, a.sccj 生产厂家, 
+    a.sbxh 设备型号, a.zcdw 资产单位, b.dddw 调度单位, a.tyrq 投运日期,
+    b.xlbh 线路编号,b.jsfs 架设方式, a.qdwz 起点杆塔或位置, a.zdwz 终点杆塔或位置, a.bz 备注, b.ddjb 调度级别
+    from ({0}) a join pms_u.equ_sd_yw_xl b on a.ls_xl_id=b.obj_id
+    ]]>
+  </GetPMSSDDevice>
+  <GetPMSJKXL>
+    <![CDATA[
+    SELECT a.obj_id, '''' yxbh,a.sbmc, a.ls_xl_id, b.gth qdwz,c.gth zdwz,
+    a.sblx, a.sbxh, a.dydj, a.sccj, a.zcdw, a.tyrq, a.bz
+    FROM 
+    (
+    select * from pms_u.equ_sd_jkxl a where a.sblx=''0101'' and a.dydj in (22,23,25,32,33,35,36,37,NULL)
+    )
+    a
+    left join pms_u.equ_sd_yw_yxgt b on a.qdgh=b.obj_id
+    left join pms_u.equ_sd_yw_yxgt c on a.zdgh=c.obj_id
+    ]]>
+  </GetPMSJKXL>
+  <GetPMSDLSB>
+    <![CDATA[
+    SELECT a.obj_id, a.yxbh, a.sbmc, a.ls_xl_id, case a.dlqdlx when ''间隔'' then b.jgmc when ''杆塔''
+    then d.gth else f.sbmc end as qdwz,
+    case a.dlzdlx when ''间隔'' then c.jgmc  when ''杆塔'' then e.gth else g.sbmc end as zdwz
+    , a.sblx, a.sbxh, a.dydj, a.sccj, a.zcdw, a.tyrq,a.bz
+    FROM (
+    select * from pms_u.equ_sd_dlsb a where a.sblx=''0201'' and a.dydj in (22,23,25,32,33,35,36,37,NULL)
+    ) a
+    left join pms_u.equ_bd_yw_jg b on a.dlqd=b.obj_id
+    left join pms_u.equ_sd_yw_yxgt d on a.dlqd=d.obj_id
+    left join (
+    select * from pms_u.equ_sd_dlsb a where a.sblx=''0201'' and a.dydj in (22,23,25,32,33,35,36,37,NULL)
+    ) f on a.dlqd=f.obj_id
+    left join pms_u.equ_bd_yw_jg c on a.dlzd=c.obj_id
+    left join pms_u.equ_sd_yw_yxgt e on a.dlzd=e.obj_id
+    left join (
+    select * from pms_u.equ_sd_dlsb a where a.sblx=''0201'' and a.dydj in (22,23,25,32,33,35,36,37,NULL)
+    ) g on a.dlzd=g.obj_id
+    ]]>
+  </GetPMSDLSB>
+  <!--NoteStat-->
+  <GetNoteStatInfoList>
+    <![CDATA[
+    DECLARE @sql varchar(4000)
+SET @sql = 'select d.infoidx ,d.infoName 统计信息 '
+SELECT @sql = @sql + ',max(case a.fieldName when ''' + fieldName + ''' then a.fieldValue else null end) ['
+	+ fieldName + ']' FROM tbNoteStatField a where a.typeIdx={0} order by a.fieldIdx
+SELECT @sql = @sql + 
+	',d.infotime [添加时间] from tbNoteStatInfo d left join tbNoteStatValue a on a.infoIdx=d.infoIdx left join tbNoteStatField b on a.fieldName = b.fieldName 
+	join tbNoteStatType c on d.typeIdx=c.typeIdx
+	where c.typeidx={0} and d.infoTime between ''{1}'' and ''{2}'''
+select @sql=@sql + ' group by d.infoidx ,d.infoName,d.infotime '
+exec (@sql)
+    ]]>
+  </GetNoteStatInfoList>
+    <GetNoteStatInfoBindedList>
+    <![CDATA[
+    DECLARE @sql varchar(4000)
+SET @sql = 'select d.infoidx ,d.infoName 统计信息 '
+SELECT @sql = @sql + ',max(case a.fieldName when ''' + fieldName + ''' then a.fieldValue else null end) ['
+	+ fieldName + ']' FROM tbNoteStatField a where a.typeIdx={0} order by a.fieldIdx
+SELECT @sql = @sql + 
+	',d.infotime [添加时间] from tbNoteStatInfo d left join tbNoteStatValue a on a.infoIdx=d.infoIdx left join tbNoteStatField b on a.fieldName = b.fieldName 
+	join tbNoteStatType c on d.typeIdx=c.typeIdx
+	where c.typeidx={0} and d.infoTime between ''{1}'' and ''{2}'''
+select @sql='select * from dbTkOvNote_property_nodeStatIds a left join ('+@sql + ' group by d.infoidx ,d.infoName,d.infotime ) b on a.nodestatids=b.infoidx '
+exec (@sql)
+    ]]>
+  </GetNoteStatInfoBindedList>
+
+  <GetNoteStatInfoTableById>
+    <![CDATA[
+    
+select a.infoidx,a.infoname,a.infotime
+,b.*
+,c.fieldvalue value from tbNoteStatInfo a 
+left join tbNoteStatField b on a.typeidx=b.typeidx
+left join tbNoteStatValue c on c.infoidx=a.infoidx and c.fieldname=b.fieldname
+where a.infoidx={0}
+
+    ]]>
+  </GetNoteStatInfoTableById>
+  <GetNoteStatInfoEmptyTable>
+    <![CDATA[
+      
+select 0 infoidx,'' infoname,'' infotime, b.*,'' value
+from  tbNoteStatField b 
+where typeidx= {0}
+
+    ]]>
+  </GetNoteStatInfoEmptyTable>
+  <!--通用-->
+  <GetDbTable>
+    <![CDATA[
+    select * from {0}
+    ]]>
+  </GetDbTable>
+  <EditDbTable>
+    <![CDATA[
+    if exists (select 1 from {0} where {2})
+      update {0} set {1} where {2}
+    else
+      insert into {0} ({3}) values ({4})
+    ]]>
+  </EditDbTable>
+  <InsertDbTable>
+    <![CDATA[
+    insert into {0} ({1}) values ({2})
+    ]]>
+  </InsertDbTable>
+  <UpdateDbTable>
+    <![CDATA[
+    update {0} set {1} where {2}
+    ]]>
+  </UpdateDbTable>
+  <DeleteDbTable>
+    <![CDATA[
+    delete from {0} where 1=1
+    ]]>
+  </DeleteDbTable>
+  <DbTableCondition>
+    <![CDATA[
+    and {0}={1}
+    ]]>
+  </DbTableCondition>
+  <AddStaUser>
+    <![CDATA[
+        INSERT INTO dbStaUserRela (staid, userid) VALUES ('{1}', '{0}')
+    ]]>
+  </AddStaUser>
+  <DeleteStaUser>
+    <![CDATA[
+        delete from dbStaUserRela where staid=(case {1} when 0 then staid else {1} end) and userid = (case '{0}' when '' then userid else '{0}' end)
+      ]]>
+  </DeleteStaUser>
+  <!--设备附属参数-->
+  <UpdateDeviceParam>
+    <![CDATA[
+    if EXISTS (select 1 from {0} where deviceidx={1})
+      update {0} set {2}={3} where deviceidx={1}
+    else
+      insert into {0} (deviceidx, {2}) values ({1}, {3})
+    ]]>
+  </UpdateDeviceParam>
+  <GetParentDispatchList>
+    <![CDATA[
+    declare @pi int
+		set @pi={0}
+		create table #tbl (did int,pid int,tname varchar(100),lev int)
+		insert into #tbl (did,pid,tname,lev) select deptidx did, pdeptidx pid, deptname tname, dispatchNum lev
+		from dbDept where pDeptIdx=@pi or (pdeptidx is null and @pi=0) and isValid=1
+		
+		while exists (select 1 from dbDept a,#tbl b 
+		where a.pDeptIdx=b.did and a.deptidx not in (select did from #tbl) and a.isValid=1)
+		insert into #tbl select deptidx, pdeptidx, deptname, dispatchNum
+		from dbDept a,#tbl b where a.pDeptIdx=b.did and a.deptidx not in (select did from #tbl) and a.isValid=1
+		
+		if({1} <> 0)
+		begin
+		while exists (select 1 from #tbl a join #tbl b on a.pid=b.did
+		where a.lev&{1}<>0 and b.lev&{1}=0)
+		update a set a.pid=b.pid from #tbl a join #tbl b on a.pid=b.did
+		where a.lev&{1}<>0 and b.lev&{1}=0
+		select * from #tbl where lev&{1}<>0
+		end
+		else
+		select * from #tbl
+		union select deptidx,pdeptidx,deptname, dispatchnum from dbdept where deptidx in
+		(select rundept from dbstation where stationidx in (select did from #tbl))
+		and deptidx not in (select did from #tbl)
+		drop table #tbl
+  	  ]]>
+  </GetParentDispatchList>
+  <GetDeptByParent>
+    <![CDATA[
+    declare @pi int
+		set @pi={0}
+		create table #tbl1 (did int,pid int,lev int)
+		insert into #tbl1 (did,pid,lev) select deptidx did, pdeptidx pid, dispatchNum lev
+		from dbDept where pDeptIdx=@pi or (pdeptidx is null and @pi=0)
+		while exists (select 1 from dbDept a,#tbl1 b 
+		where a.pDeptIdx=b.did and b.lev&{1}=0 and a.deptIdx not in (select did from #tbl1))
+		insert into #tbl1 select deptidx, pdeptidx, dispatchNum
+		from dbDept a,#tbl1 b where a.pDeptIdx=b.did and b.lev&{1}=0 and a.deptIdx not in (select did from #tbl1)		
+		select b.* from #tbl1 a join dbdept b on a.did=b.deptidx where a.lev&{1}<>0 and b.isValid=1
+		drop table #tbl1
+      ]]>
+  </GetDeptByParent>
+  <GetParentListByOrder>
+    <![CDATA[
+    select * from dbDept order by deptname
+    ]]>
+  </GetParentListByOrder>
+  <WhereDeptTypeByPDept>
+    <![CDATA[]]>
+  </WhereDeptTypeByPDept>
+</ROOT>

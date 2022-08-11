@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ROOT>
+  <InsertLoginSuccess>
+    <![CDATA[
+        INSERT INTO dbLoginInfo(logintime,loginip,loginid,errorcount,loginname,sessionid) VALUES ('{0}','{1}','{2}',0,'{5}',{6});
+    ]]>
+  </InsertLoginSuccess>
+  <InsertLoginFail>
+    <![CDATA[
+    INSERT INTO dbLoginInfo (logintime,loginip,loginid,errorcount,loginname,sessionid) VALUES ('{0}','{1}','{2}',1,'{5}','{6}');
+    ]]>
+  </InsertLoginFail>
+  <GetLoginInfo remark="24小时内">
+    <![CDATA[
+    SELECT logintime,loginip,loginid,errorcount,sessionid FROM dbLoginInfo WHERE logintime>=NOW()-1 AND loginid='{0}' ORDER BY logintime DESC
+    ]]>
+  </GetLoginInfo>
+  <GetAuditType>
+    <![CDATA[SELECT DISTINCT(logType),logType FROM tbUserAuditLog where logType is not null]]>
+  </GetAuditType>
+</ROOT>

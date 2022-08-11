@@ -1,0 +1,91 @@
+﻿.di-wrapper{
+    padding: 20px 40px;
+    background: #e9f1fa;
+    overflow: auto;
+    position: relative;
+}
+
+.di-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.di-box.self{
+    align-items: flex-end;
+}
+
+.di-box.other{
+    align-items: flex-start;
+}
+
+.di-box> span{
+    margin-bottom: 5px;
+}
+
+.di-wrapper .time{
+    color: #99b8ce;
+}
+
+.di-wrapper .person{
+    color: #5494d5;
+}
+
+.di-wrapper .company{
+    color: #99b8ce;
+}
+
+.di-wrapper .authentication{
+    color: #5494d5;
+}
+
+.di-wrapper .text{
+    color: #000;
+    background: #bfdbf9;
+    padding: 5px 15px;
+    border-radius: 6px;
+    max-width: 40%;
+}
+
+.di-wrapper .selectbox{
+    position: absolute;
+    left: -30px;
+    cursor: pointer;
+}
+
+.di-wrapper .more-info{
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+
+.di-wrapper .ivu-tooltip-inner{
+    max-width: 250px;
+    min-height: 34px;
+    padding: 8px 12px;
+    color: #fff;
+    text-align: left;
+    text-decoration: none;
+    background-color: #464c5be6;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 6px rgb(0 0 0 / 20%);
+    box-shadow: 0 1px 6px rgb(0 0 0 / 20%);
+    white-space: nowrap;
+}
+/*tooltip的箭头背景色*/
+.di-wrapper .ivu-tooltip-popper[x-placement^=top] .ivu-tooltip-arrow{
+    border-top-color: #464c5be6;
+}
+
+.di-wrapper .group-span{
+    display: block;
+    border-top: 1px dashed;
+    width: 100%;
+    text-align: center;
+    margin-bottom: -21px;
+}
+
+.di-wrapper .ivu-poptip-body-content-word-wrap {
+    white-space: normal;
+}
