@@ -1,0 +1,21 @@
+输出：2022-08-14 18:51:22  ----------
+AjaxPro.AjaxSyncHttpHandlerSession
+输出：2022-08-14 18:51:22  ----------
+http://192.168.31.22:2000/conn/ashx/PDP,PDP2.0.ashx
+输出：2022-08-14 18:51:22  ----------
+run userid is null
+30637156,30637203,47输出：2022-08-14 18:51:22  ----------
+AjaxPro.AjaxSyncHttpHandlerSession
+输出：2022-08-14 18:51:22  ----------
+http://192.168.31.22:2000/conn/ashx/PDP,PDP2.0.ashx
+输出：2022-08-14 18:51:22  ----------
+run userid is null
+30637296,30637296,0输出：2022-08-14 18:51:24  ----------
+Unable to connect to any of the specified MySQL hosts.
+   在 MySql.Data.MySqlClient.NativeDriver.Open()
+   在 MySql.Data.MySqlClient.Driver.Open()
+   在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   在 MySql.Data.MySqlClient.MySqlConnection.Open()
+   在 DBAdapte.DBAdapter.Open()
+   在 LoginHandler.GetLoginInfo(HttpContext context)
+   在 LoginHandler.ProcessRequest(HttpContext context)
