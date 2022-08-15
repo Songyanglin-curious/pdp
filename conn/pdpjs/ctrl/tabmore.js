@@ -23,7 +23,7 @@ Vue.component('tabmore', {
             // widthWrap 容器的宽度
             widthWrap: 0,
             //更多按钮
-            moreButton: false,
+            moreButton: true,
             //更多按钮的尺寸
             moreButtonWidth:0,
             //
@@ -51,9 +51,6 @@ Vue.component('tabmore', {
         initWidth() {
             this.widthArr = []
             this.widthWrap = this.$el.offsetWidth
-            
-            let moreButton = this.$el.children[this.$el.children.length-1];
-            this.moreButtonWidth = moreButton.offsetWidth
             let childrens = this.$el.children;
             this.widthAll = 0;
             let toLeft = 0
@@ -68,38 +65,16 @@ Vue.component('tabmore', {
             }
         },
         trimData() {
-            // 重新计算宽度，直到找到需要显示的前几个
-            // let childNum = this.widthArr.length - 1;
-            // let showNum = 0;
-            // for (childNum; childNum >= 0; childNum--) {
-            //     let sumWidth = 0;
-            //     for (let i = 0; i <= childNum; i++) {
-            //         sumWidth += this.widthArr[i].width
-            //     }
-            //     if (sceenWidth - sumWidth - 80 > 0) {
-            //         showNum = childNum;
-            //         break;
-            //     }
-            // }
+            // && this.widthArr[i+1].rightToLeft+this.moreButtonWidth>this.widthWrap
+            let index = 0;
             for(let i=this.widthArr.length-1;i>=0;i--){
                 console.log(i)
-                if(this.widthArr[i].rightToLeft+this.moreButtonWidth<this.widthWrap){
-                    this.index = i;
+                if(this.widthArr[i].rightToLeft+this.moreButtonWidth<this.widthWrap ){
+                    index = i;
                     break;
                 }
             }
-            // for(let i = 0;i<this.widthArr.length;i++){
-            //     if(i == this.widthArr.length-1){
-            //         this.index = i
-            //         break
-            //     }
-            //     if(this.widthArr[i].rightToLeft+this.moreButtonWidth<this.widthWrap && this.widthArr[i+1].rightToLeft+this.moreButtonWidth > this.widthWrap){
-            //         this.index =i
-            //         break
-            //     }
-            // }
-             
-            this.currentData = this.datasource.slice(0, this.index)
+            this.currentData = this.datasource.slice(0, index)
         },
         showTab:function(v,o){
             //获取容器宽度，tab总宽度，记录每个tab宽度到widthArr
@@ -108,7 +83,10 @@ Vue.component('tabmore', {
             if(this.widthAll  >this.widthWrap ){
                 //tab长度过长，需要修剪显示数据
                 this.showMoreButton = true
-                this.trimData()
+                
+                    this.trimData()
+               
+                
             }else{
                 this.showMoreButton = false
             }
@@ -157,6 +135,9 @@ Vue.component('tabmore', {
 
     // },
     mounted: function () {
+        //在这里获取更多按钮的尺寸
+        let moreButton = this.$el.children[this.$el.children.length-1];
+        this.moreButtonWidth = moreButton.offsetWidth
         this.showTab();
         // this.initWidth();
         // this.showTab();
