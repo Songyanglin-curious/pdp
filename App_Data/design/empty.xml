@@ -9,10 +9,12 @@
   <ctrls>
     <div id="div0" desc="根容器">
       <a class='wh100'></a>
+
     </div>
   </ctrls>
   <scripts>
     <script event="created">
+
       <list type="script">
         <value>
           <![CDATA[

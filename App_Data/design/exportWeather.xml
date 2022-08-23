@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root maxid="1" desc="空白页">
+  <inits>
+    <init id="jump" type="request" arg="m"></init>
+  </inits>
+  <consts>
+    <const id="dateDay" desc="选中-时间"></const>
+    <const id="dsDataType" desc="数据源-数据类型" type="2d" length="2" arg="0,网络数据,1,站点数据"></const>
+    <const id="dataType" desc="选中-数据类型" ></const>
+    <const id="dsScheduleUnit" desc="数据源-调度单位" type="2d" length="2" arg="0,陕西调度"></const>
+    <const id="scheduleUnit" desc="选中-调度单位" ></const>
+</consts>
+  <ctrls>
+    <div id="div0" desc="根容器">
+      <a class='wh100'></a>
+        <div>
+            <div>
+                <label >
+                    <a value="天气数据导出"></a>
+                </label>
+            </div>
+            <div>
+                <label >
+                    <a value="时	间:"></a>
+                </label>
+                <div>
+                    <idate desc="月" from="dateDay">
+                        <a format="yyyy-MM-dd" s_width="150px"></a>
+                        <a type="daterange"></a>
+
+                    </idate>
+                </div>
+            </div>
+            <div>
+					<label value="数据类型:"></label>
+					<div>
+                        <iselect desc="数据类型" from="dataType" source="dsDataType" style="width:200px;margin-top:15px;">
+
+                        </iselect>
+					</div>
+				</div>
+				<div>
+					<label value="调度单位:"></label>
+					<div>
+                        <iselect desc="调度单位" from="scheduleUnit" source="dsScheduleUnit" style="width:200px;margin-top:15px;">
+
+                        </iselect>
+					</div>
+				</div>
+				<div>
+					<button>
+						<a value="导出" type="button" class="default-button"></a>
+                        <e>
+                            <onclick>
+                                <list type="script" value="this.exportWeather()"></list>
+                            </onclick>
+                        </e>
+					</button>
+				</div>
+        </div>
+    </div>
+  </ctrls>
+  <scripts>
+    <script event="created">
+        <list type="file" value="exportWeather"></list>
+      <list type="script">
+        <value>
+          <![CDATA[
+          ]]>
+        </value>
+      </list>
+    </script>
+    <script event="mounted">
+      <list type="script">
+        <value>
+          <![CDATA[
+          ]]>
+        </value>
+      </list>
+    </script>
+  </scripts>
+</root>
